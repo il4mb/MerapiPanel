@@ -1,1 +1,1 @@
-declare module 'merapipanel';
+declare module '@merapipanel';
