@@ -1,0 +1,11 @@
+{
+  "name": "merapipanel",
+  "version": "1.0.0",
+  "description": "Module of merapi panel CMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "il4mb",
+  "license": "ISC"
+}
