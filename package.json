@@ -1,5 +1,5 @@
 {
-  "name": "merapipanel",
+  "name": "@il4mb/merapipanel",
   "version": "1.0.0",
   "description": "Module of merapi panel CMS",
   "main": "index.js",
@@ -7,5 +7,31 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "il4mb",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/il4mb/merapipanel.git"
+  },
+  "keywords": [
+    "MerapiPanel",
+    "Module",
+    "Editor",
+    "Block",
+    "js",
+    "ts",
+    "scss"
+  ],
+  "bugs": {
+    "url": "https://github.com/il4mb/merapipanel/issues"
+  },
+  "homepage": "https://github.com/il4mb/merapipanel#readme",
+  "dependencies": {
+    "grapesjs": "^0.21.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.67",
+    "@types/react-dom": "^18.2.22"
+  }
 }

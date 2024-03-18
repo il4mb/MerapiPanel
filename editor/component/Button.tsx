@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { usePanel } from "./Panel";
-import { useRoot } from "../RootEditor";
-import { Command, CommandObject, Editor } from "grapesjs";
+import React from "react";
+import { CommandObject } from "grapesjs";
 
 
 type ButtonProps = {

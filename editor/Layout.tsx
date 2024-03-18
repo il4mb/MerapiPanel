@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ContainerProps } from "./Container";
 import { PanelProps } from "./component/Panel";
 

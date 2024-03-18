@@ -1,3 +1,3 @@
 export const sayHallo = () => {
-    console.log("Hallo World");
+    console.log("Hallo MerapiPanel");
 }

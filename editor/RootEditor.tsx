@@ -2,13 +2,13 @@ import React, { createContext, useContext, useEffect, useRef, useState } from "r
 import grapesjs, { Editor, EditorConfig } from "grapesjs";
 
 
-function isObject(item) {
+function isObject(item: any) {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
 
 
-const DeepMerge = (target: any, ...sources: any) => {
+export const DeepMerge = (target: any, ...sources: any) => {
 
     let target_clone = { ...target };
 
@@ -75,7 +75,7 @@ const DeepMerge = (target: any, ...sources: any) => {
 
 
 
-const findCanvasTypeInChildren = (children, callback) => {
+export const findCanvasTypeInChildren = (children: React.ReactNode, callback: Function) => {
     React.Children.forEach(children, child => {
         if (React.isValidElement(child)) {
             // Check if the child is the target type
@@ -153,14 +153,6 @@ const RootEditor = (props: RootProps) => {
         }
     };
 
-
-    fetch('/merapi/config/app.yml')
-        .then(response => response.json())
-        .then(data => {
-            initial.config = DeepMerge(initial.config, data);
-        });
-
-
     useEffect(() => {
         if (props.config) {
             initial.config = DeepMerge(initial.config, props.config);
@@ -173,15 +165,13 @@ const RootEditor = (props: RootProps) => {
 
         if (count > 0) {
             setTimeout(() => { setCount(count - 1); setProgress(40 - (count * 100) / 20); }, 200);
-
             return;
         }
+
         if (canvasRef.current === null) {
             console.error("cant find canvas component");
             return;
         }
-
-        fetch('/merapi/config/app.yml')
 
         initial.config.container = canvasRef.current as HTMLElement;
 
@@ -192,8 +182,6 @@ const RootEditor = (props: RootProps) => {
                 props.onReady(initialEditor);
             }
         });
-
-        setProgress(100);
 
     }, [count, canvasRef]);
 
