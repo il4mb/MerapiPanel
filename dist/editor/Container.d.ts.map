@@ -1,1 +1,0 @@
-{"version":3,"file":"Container.d.ts","sourceRoot":"","sources":["../../src/editor/Container.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,MAAM,OAAO,CAAC;AAE1B,MAAM,WAAW,cAAc;IAC3B,QAAQ,CAAC,EAAE,KAAK,CAAC,SAAS,CAAA;IAC1B,EAAE,CAAC,EAAE,MAAM,CAAC;IACZ,KAAK,CAAC,EAAE,KAAK,CAAC,aAAa,CAAA;CAC9B;AAED,eAAO,MAAM,SAAS,UAAW,cAAc,sBAM9C,CAAA"}

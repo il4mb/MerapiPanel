@@ -23,12 +23,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = __importStar(require("react"));
-const editor_1 = require("./editor");
-const client_1 = require("react-dom/client");
-const App = () => {
-    return (react_1.default.createElement(editor_1.RootEditor, null));
-};
-const root = (0, client_1.createRoot)(document.getElementById('root'));
-root.render(react_1.default.createElement(react_1.StrictMode, null,
-    react_1.default.createElement(App, null)));
+exports.Components = exports.Canvas = exports.Container = exports.LayoutRow = exports.Layout = exports.Editor = exports.useRoot = exports.RootEditor = void 0;
+var RootEditor_1 = require("./RootEditor");
+Object.defineProperty(exports, "RootEditor", { enumerable: true, get: function () { return RootEditor_1.RootEditor; } });
+Object.defineProperty(exports, "useRoot", { enumerable: true, get: function () { return RootEditor_1.useRoot; } });
+var grapesjs_1 = require("grapesjs");
+Object.defineProperty(exports, "Editor", { enumerable: true, get: function () { return grapesjs_1.Editor; } });
+var Layout_1 = require("./Layout");
+Object.defineProperty(exports, "Layout", { enumerable: true, get: function () { return Layout_1.Layout; } });
+var LayoutRow_1 = require("./LayoutRow");
+Object.defineProperty(exports, "LayoutRow", { enumerable: true, get: function () { return LayoutRow_1.LayoutRow; } });
+var Container_1 = require("./Container");
+Object.defineProperty(exports, "Container", { enumerable: true, get: function () { return Container_1.Container; } });
+var Canvas_1 = require("./Canvas");
+Object.defineProperty(exports, "Canvas", { enumerable: true, get: function () { return Canvas_1.Canvas; } });
+exports.Components = __importStar(require("./component"));

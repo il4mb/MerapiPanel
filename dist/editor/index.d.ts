@@ -5,4 +5,3 @@ export { LayoutRow, LayoutRowProps } from "./LayoutRow";
 export { Container, ContainerProps } from "./Container";
 export { Canvas, CanvasProps } from "./Canvas";
 export * as Components from "./component";
-//# sourceMappingURL=index.d.ts.map
