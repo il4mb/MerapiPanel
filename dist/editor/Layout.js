@@ -9,3 +9,4 @@ const Layout = (props) => {
     return (react_1.default.createElement("div", { className: "merapi__editor--layout" + (props.className ? " " + props.className : ""), id: props.id }, props.children));
 };
 exports.Layout = Layout;
+//# sourceMappingURL=Layout.js.map

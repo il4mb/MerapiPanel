@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { ContainerProps } from "../../Container";
 import { useRoot } from "../../RootEditor";
-import './BlocksContainer.scss';
-import { AddComponentTypeOptions, BlockProperties, ComponentAddType } from "grapesjs";
+// import './BlocksContainer.scss';
+import { AddComponentTypeOptions} from "grapesjs";
 
 
 /**

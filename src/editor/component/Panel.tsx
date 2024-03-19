@@ -3,7 +3,6 @@ import { ContainerProps } from "../Container";
 import { useRoot } from "../RootEditor";
 import { Editor } from "grapesjs";
 import { ButtonProps } from "./Button";
-import { TextEncoder } from 'node:util';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 

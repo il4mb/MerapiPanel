@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { isString } from "underscore";
 import { ContainerProps } from "../../Container";
 import { useRoot } from "../../RootEditor";
-import './SelectedContainer.scss';
+// import './SelectedContainer.scss';
 
 
 export default (props: ContainerProps) => {

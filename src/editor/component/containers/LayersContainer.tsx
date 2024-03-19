@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { ContainerProps } from "../../Container";
 import { useRoot } from "../../RootEditor";
-import "./LayersContainer.scss";
+// import "./LayersContainer.scss";
 
 export default (props: ContainerProps) => {
 

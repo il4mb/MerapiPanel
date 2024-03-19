@@ -1,6 +1,5 @@
 import React from "react";
 import { ContainerProps } from "../../Container";
-import './BlocksContainer.scss';
 /**
  * Blocks Container
  */

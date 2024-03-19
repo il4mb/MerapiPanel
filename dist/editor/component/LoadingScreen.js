@@ -29,13 +29,11 @@ const RootEditor_1 = require("../RootEditor");
 const LoadingScreen = () => {
     const { progress } = (0, RootEditor_1.useRoot)();
     (0, react_1.useEffect)(() => {
-        var _a;
         console.log("PROGRESS", progress);
         if (progress === 100) {
-            (_a = document.querySelector('.loading-screen')) === null || _a === void 0 ? void 0 : _a.classList.add('hide');
+            document.querySelector('.loading-screen')?.classList.add('hide');
             setTimeout(() => {
-                var _a;
-                (_a = document.querySelector('.loading-screen')) === null || _a === void 0 ? void 0 : _a.remove();
+                document.querySelector('.loading-screen')?.remove();
             }, 400);
         }
     }, [progress]);
@@ -44,3 +42,4 @@ const LoadingScreen = () => {
             react_1.default.createElement("div", { className: "progressbar", style: { "--MP-loading-width": `${progress}%` } }))));
 };
 exports.LoadingScreen = LoadingScreen;
+//# sourceMappingURL=LoadingScreen.js.map

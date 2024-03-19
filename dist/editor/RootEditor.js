@@ -22,19 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RootEditor = exports.useRoot = exports.findCanvasTypeInChildren = exports.DeepMerge = exports.isObject = void 0;
+exports.RootEditor = exports.useRoot = exports.findCanvasTypeInChildren = exports.deepMerge = exports.isObject = void 0;
 const react_1 = __importStar(require("react"));
-const grapesjs_1 = __importDefault(require("grapesjs"));
 function isObject(item) {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 exports.isObject = isObject;
-const DeepMerge = (target, ...sources) => {
-    let target_clone = Object.assign({}, target);
+const deepMerge = (target, ...sources) => {
+    let target_clone = { ...target };
     sources.forEach((source) => {
         // Iterate through `source` properties and if an `Object` set property to merge of `target` and `source` properties
         for (const key in source) {
@@ -42,7 +38,7 @@ const DeepMerge = (target, ...sources) => {
                 if (!(key in target_clone)) {
                     target_clone[key] = {};
                 }
-                target_clone[key] = (0, exports.DeepMerge)(target_clone[key], source[key]);
+                target_clone[key] = (0, exports.deepMerge)(target_clone[key], source[key]);
             }
             else if (Array.isArray(source[key])) {
                 if (key in target_clone) {
@@ -85,7 +81,7 @@ const DeepMerge = (target, ...sources) => {
     });
     return target_clone;
 };
-exports.DeepMerge = DeepMerge;
+exports.deepMerge = deepMerge;
 const findCanvasTypeInChildren = (children, callback) => {
     react_1.default.Children.forEach(children, child => {
         if (react_1.default.isValidElement(child)) {
@@ -109,57 +105,72 @@ const RootContext = (0, react_1.createContext)({});
 const useRoot = () => (0, react_1.useContext)(RootContext);
 exports.useRoot = useRoot;
 const RootEditor = (props) => {
-    const canvasRef = (0, react_1.useRef)(null);
-    const [editor, setEditor] = (0, react_1.useState)(null);
-    const [count, setCount] = (0, react_1.useState)(5);
-    const [progress, setProgress] = (0, react_1.useState)(0);
-    const initial = {
-        progress,
-        setProgress,
-        canvasRef: canvasRef,
-        editor,
-        setEditor,
-        config: {
-            fromElement: true,
-            height: '100%',
-            width: "100%",
-            storageManager: false,
-            layerManager: {
-                stylePrefix: "merapi__editor-"
-            },
-            stylePrefix: "merapi__editor-",
-            cssIcons: undefined,
-            colorPicker: {
-                containerClassName: 'color-picker',
-            },
-            // Avoid any default panel
-            panels: { defaults: [] },
-        }
-    };
-    (0, react_1.useEffect)(() => {
-        if (props.config) {
-            initial.config = (0, exports.DeepMerge)(initial.config, props.config);
-        }
-    }, [props.config]);
-    (0, react_1.useEffect)(() => {
-        if (count > 0) {
-            setTimeout(() => { setCount(count - 1); setProgress(40 - (count * 100) / 20); }, 200);
-            return;
-        }
-        if (canvasRef.current === null) {
-            console.error("cant find canvas component");
-            return;
-        }
-        initial.config.container = canvasRef.current;
-        const initialEditor = grapesjs_1.default.init(initial.config);
-        setEditor(initialEditor);
-        initialEditor.onReady(() => {
-            if (props.onReady) {
-                props.onReady(initialEditor);
-            }
-        });
-    }, [count, canvasRef]);
-    return (react_1.default.createElement(RootContext.Provider, { value: initial },
-        react_1.default.createElement("div", { className: "merapi__editor" }, props.children)));
+    // const canvasRef = useRef<HTMLDivElement | null>(null);
+    // const [editor, setEditor] = useState<Editor | null>(null);
+    // const [count, setCount] = useState<number>(5);
+    // const [progress, setProgress] = useState<number>(0);
+    // const initial: IRoot = {
+    //     progress,
+    //     setProgress,
+    //     canvasRef: canvasRef,
+    //     editor,
+    //     setEditor,
+    //     config: {
+    //         fromElement: true,
+    //         height: '100%',
+    //         width: "100%",
+    //         storageManager: false,
+    //         layerManager: {
+    //             stylePrefix: "merapi__editor-"
+    //         },
+    //         stylePrefix: "merapi__editor-",
+    //         cssIcons: undefined,
+    //         colorPicker: {
+    //             containerClassName: 'color-picker',
+    //         },
+    //         // Avoid any default panel
+    //         panels: { defaults: [] },
+    //     }
+    // };
+    // useEffect(() => {
+    //     if (props.config) {
+    //         initial.config = deepMerge(initial.config, props.config);
+    //     }
+    // }, [props.config]);
+    // useEffect(() => {
+    //     if (count > 0) {
+    //         setTimeout(() => { setCount(count - 1); setProgress(40 - (count * 100) / 20); }, 200);
+    //         return;
+    //     }
+    //     if (canvasRef.current === null) {
+    //         console.error("cant find canvas component");
+    //         return;
+    //     }
+    //     initial.config.container = canvasRef.current as HTMLElement;
+    //     const initialEditor = grapesjs.init(initial.config);
+    //     setEditor(initialEditor as any);
+    //     initialEditor.onReady(() => {
+    //         if (props.onReady) {
+    //             props.onReady(initialEditor);
+    //         }
+    //     });
+    // }, [count, canvasRef]);
+    // return (
+    //     <RootContext.Provider value={initial}>
+    //         <div className="merapi__editor">
+    //             {props.children}
+    //         </div>
+    //     </RootContext.Provider>
+    // )
+    // return (
+    //     <>
+    //         <RootContext.Provider value={{} as any}>
+    //             <div className="merapi__editor">
+    //                 {props.children}
+    //             </div>
+    //         </RootContext.Provider>
+    //     </>
+    // )
 };
 exports.RootEditor = RootEditor;
+//# sourceMappingURL=RootEditor.js.map

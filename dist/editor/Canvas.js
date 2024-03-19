@@ -11,3 +11,4 @@ const Canvas = (props) => {
     return (react_1.default.createElement("div", { ref: canvasRef, className: "editor__canvas" }, props.children));
 };
 exports.Canvas = Canvas;
+//# sourceMappingURL=Canvas.js.map

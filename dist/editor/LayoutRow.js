@@ -9,3 +9,4 @@ const LayoutRow = (props) => {
     return (react_1.default.createElement("div", { className: "merapi__editor--layout-row" + (props.clasaName ? " " + props.clasaName : "") }, props.children));
 };
 exports.LayoutRow = LayoutRow;
+//# sourceMappingURL=LayoutRow.js.map

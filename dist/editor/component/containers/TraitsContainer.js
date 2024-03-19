@@ -12,3 +12,4 @@ exports.default = (props) => {
     };
     return (react_1.default.createElement("div", { className: "container-traits", id: props.id }));
 };
+//# sourceMappingURL=TraitsContainer.js.map

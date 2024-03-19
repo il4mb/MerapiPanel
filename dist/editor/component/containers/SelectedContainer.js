@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const underscore_1 = require("underscore");
 const RootEditor_1 = require("../../RootEditor");
-require("./SelectedContainer.scss");
+// import './SelectedContainer.scss';
 exports.default = (props) => {
     const { editor } = (0, RootEditor_1.useRoot)();
     const [name, setName] = (0, react_1.useState)("");
@@ -57,3 +57,4 @@ exports.default = (props) => {
         react_1.default.createElement("div", { className: "component-icon", dangerouslySetInnerHTML: { __html: icon } }),
         react_1.default.createElement("div", { className: "component-name" }, name)));
 };
+//# sourceMappingURL=SelectedContainer.js.map

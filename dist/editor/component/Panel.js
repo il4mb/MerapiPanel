@@ -87,3 +87,4 @@ const Panel = (props) => {
         react_1.default.createElement("div", { className: "merapi__editor--panel " + (props.className ? props.className : ""), id: props.id }, props.children)));
 };
 exports.Panel = Panel;
+//# sourceMappingURL=Panel.js.map

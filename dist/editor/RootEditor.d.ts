@@ -1,7 +1,7 @@
 import React from "react";
 import { Editor, EditorConfig } from "grapesjs";
 export declare function isObject(item: any): any;
-export declare const DeepMerge: (target: any, ...sources: any) => any;
+export declare const deepMerge: (target: any, ...sources: any) => any;
 export declare const findCanvasTypeInChildren: (children: React.ReactNode, callback: Function) => void;
 export interface IRoot {
     progress: number;
@@ -17,4 +17,4 @@ export interface RootProps {
     onReady?: (editor: Editor) => void;
     config?: EditorConfig;
 }
-export declare const RootEditor: (props: RootProps) => React.JSX.Element;
+export declare const RootEditor: (props: RootProps) => void;

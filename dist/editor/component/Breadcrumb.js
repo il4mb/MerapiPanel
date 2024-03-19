@@ -28,7 +28,6 @@ const react_1 = __importStar(require("react"));
 const RootEditor_1 = require("../RootEditor");
 // Function to generate breadcrumbs
 function generateBreadcrumbs(component) {
-    var _a;
     const breadcrumbs = [];
     let currentComponent = component;
     // Traverse up the component hierarchy until reaching the body
@@ -37,11 +36,11 @@ function generateBreadcrumbs(component) {
         if (currentComponent.get("tagName") == "body") {
             name = "body";
         }
-        else if (!name || (name === null || name === void 0 ? void 0 : name.length) == 0) {
+        else if (!name || name?.length == 0) {
             name = currentComponent.get("tagName");
         }
         name = `<span class='component-name'>${name}</span>`;
-        if (((_a = currentComponent.get("classes")) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+        if (currentComponent.get("classes")?.length > 0) {
             name += `<span class='component-class'>`;
             currentComponent.get("classes").models.forEach((model) => {
                 name += "." + model.get("name");
@@ -83,3 +82,4 @@ const Breadcrumb = () => {
     return (react_1.default.createElement("div", { ref: ref, id: "breadcrumb", className: "merapi__editor--breadcrumb" }));
 };
 exports.Breadcrumb = Breadcrumb;
+//# sourceMappingURL=Breadcrumb.js.map

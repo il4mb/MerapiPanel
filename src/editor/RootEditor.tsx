@@ -8,7 +8,7 @@ export function isObject(item: any) {
 
 
 
-export const DeepMerge = (target: any, ...sources: any) => {
+export const deepMerge = (target: any, ...sources: any) => {
 
     let target_clone = { ...target };
 
@@ -20,7 +20,7 @@ export const DeepMerge = (target: any, ...sources: any) => {
                 if (!(key in target_clone)) {
                     target_clone[key] = {};
                 }
-                target_clone[key] = DeepMerge(target_clone[key], source[key]);
+                target_clone[key] = deepMerge(target_clone[key], source[key]);
             }
             else if (Array.isArray(source[key])) {
 
@@ -33,11 +33,11 @@ export const DeepMerge = (target: any, ...sources: any) => {
 
                             for (const j in target_clone[key]) {
 
-                                let sortedTarget = Object.keys(target_clone[key][j]).sort().reduce((acc, x) => {
+                                let sortedTarget = Object.keys(target_clone[key][j]).sort().reduce((acc: any, x) => {
                                     acc[x] = target_clone[key][j][x];
                                     return acc;
                                 }, {});
-                                let sortedSource = Object.keys(source[key][i]).sort().reduce((acc, x) => {
+                                let sortedSource = Object.keys(source[key][i]).sort().reduce((acc: any, x) => {
                                     acc[x] = source[key][i][x];
                                     return acc;
                                 }, {});
@@ -111,11 +111,7 @@ export interface IRoot {
 
 
 const RootContext = createContext({} as IRoot);
-
 export const useRoot = () => useContext(RootContext);
-
-
-
 
 
 
@@ -129,72 +125,82 @@ export interface RootProps {
 
 export const RootEditor = (props: RootProps) => {
 
-    const canvasRef = useRef<HTMLDivElement | null>(null);
-    const [editor, setEditor] = useState<Editor | null>(null);
-    const [count, setCount] = useState<number>(5);
-    const [progress, setProgress] = useState<number>(0);
+    // const canvasRef = useRef<HTMLDivElement | null>(null);
+    // const [editor, setEditor] = useState<Editor | null>(null);
+    // const [count, setCount] = useState<number>(5);
+    // const [progress, setProgress] = useState<number>(0);
 
-    const initial: IRoot = {
-        progress,
-        setProgress,
-        canvasRef: canvasRef,
-        editor,
-        setEditor,
-        config: {
-            fromElement: true,
-            height: '100%',
-            width: "100%",
-            storageManager: false,
-            layerManager: {
-                stylePrefix: "merapi__editor-"
-            },
-            stylePrefix: "merapi__editor-",
-            cssIcons: undefined,
-            colorPicker: {
-                containerClassName: 'color-picker',
-            },
-            // Avoid any default panel
-            panels: { defaults: [] },
-        }
-    };
+    // const initial: IRoot = {
+    //     progress,
+    //     setProgress,
+    //     canvasRef: canvasRef,
+    //     editor,
+    //     setEditor,
+    //     config: {
+    //         fromElement: true,
+    //         height: '100%',
+    //         width: "100%",
+    //         storageManager: false,
+    //         layerManager: {
+    //             stylePrefix: "merapi__editor-"
+    //         },
+    //         stylePrefix: "merapi__editor-",
+    //         cssIcons: undefined,
+    //         colorPicker: {
+    //             containerClassName: 'color-picker',
+    //         },
+    //         // Avoid any default panel
+    //         panels: { defaults: [] },
+    //     }
+    // };
 
-    useEffect(() => {
-        if (props.config) {
-            initial.config = DeepMerge(initial.config, props.config);
-        }
-    }, [props.config]);
+    // useEffect(() => {
+    //     if (props.config) {
+    //         initial.config = deepMerge(initial.config, props.config);
+    //     }
+    // }, [props.config]);
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (count > 0) {
-            setTimeout(() => { setCount(count - 1); setProgress(40 - (count * 100) / 20); }, 200);
-            return;
-        }
+    //     if (count > 0) {
+    //         setTimeout(() => { setCount(count - 1); setProgress(40 - (count * 100) / 20); }, 200);
+    //         return;
+    //     }
 
-        if (canvasRef.current === null) {
-            console.error("cant find canvas component");
-            return;
-        }
+    //     if (canvasRef.current === null) {
+    //         console.error("cant find canvas component");
+    //         return;
+    //     }
 
-        initial.config.container = canvasRef.current as HTMLElement;
+    //     initial.config.container = canvasRef.current as HTMLElement;
 
-        const initialEditor = grapesjs.init(initial.config);
-        setEditor(initialEditor as any);
-        initialEditor.onReady(() => {
-            if (props.onReady) {
-                props.onReady(initialEditor);
-            }
-        });
+    //     const initialEditor = grapesjs.init(initial.config);
+    //     setEditor(initialEditor as any);
+    //     initialEditor.onReady(() => {
+    //         if (props.onReady) {
+    //             props.onReady(initialEditor);
+    //         }
+    //     });
 
-    }, [count, canvasRef]);
+    // }, [count, canvasRef]);
 
-    return (
-        <RootContext.Provider value={initial}>
-            <div className="merapi__editor">
-                {props.children}
-            </div>
-        </RootContext.Provider>
-    )
+    // return (
+    //     <RootContext.Provider value={initial}>
+    //         <div className="merapi__editor">
+    //             {props.children}
+    //         </div>
+    //     </RootContext.Provider>
+    // )
+
+    // return (
+    //     <>
+    //         <RootContext.Provider value={{} as any}>
+    //             <div className="merapi__editor">
+    //                 {props.children}
+    //             </div>
+    //         </RootContext.Provider>
+    //     </>
+    // )
 }

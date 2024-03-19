@@ -25,7 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const RootEditor_1 = require("../../RootEditor");
-require("./BlocksContainer.scss");
 /**
  * Blocks Container
  */
@@ -62,3 +61,4 @@ exports.default = (props) => {
     }, [editor]);
     return (react_1.default.createElement("div", { className: "blocks-container hide", id: props.id }, props.children));
 };
+//# sourceMappingURL=BlocksContainer.js.map

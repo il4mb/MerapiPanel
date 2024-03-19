@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 const RootEditor_1 = require("../../RootEditor");
-require("./LayersContainer.scss");
+// import "./LayersContainer.scss";
 exports.default = (props) => {
     const { config } = (0, RootEditor_1.useRoot)();
     config.layerManager = {
@@ -13,3 +13,4 @@ exports.default = (props) => {
     };
     return (react_1.default.createElement("div", { className: "container-layers hide", id: props.id }));
 };
+//# sourceMappingURL=LayersContainer.js.map
