@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useRoot } from "../RootEditor";
+import { useRoot } from "../Root";
 
 
 export const LoadingScreen = () => {

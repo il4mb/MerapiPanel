@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ContainerProps } from "../../Container";
-import { useRoot } from "../../RootEditor";
+import { useRoot } from "../../Root";
 // import './BlocksContainer.scss';
 import { AddComponentTypeOptions} from "grapesjs";
 
@@ -15,7 +15,7 @@ export default (props: ContainerProps) => {
     const { editor, config } = useRoot();
 
     config.blockManager = {
-        appendTo: '.blocks-container',
+        appendTo: '.container-blocks',
     }
 
 
@@ -53,7 +53,7 @@ export default (props: ContainerProps) => {
     }, [editor]);
 
     return (
-        <div className="blocks-container hide" id={props.id}>
+        <div className="merapi__editor-container container-blocks hide" id={props.id}>
             {props.children}
         </div>
     )

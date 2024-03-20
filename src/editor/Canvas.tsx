@@ -1,5 +1,5 @@
 import React from "react";
-import { useRoot } from "./RootEditor";
+import { useRoot } from "./Root";
 
 export interface CanvasProps {
     children?: React.ReactNode

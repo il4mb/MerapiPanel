@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { isString } from "underscore";
 import { ContainerProps } from "../../Container";
-import { useRoot } from "../../RootEditor";
-// import './SelectedContainer.scss';
+import { useRoot } from "../../Root";
 
 
 export default (props: ContainerProps) => {
@@ -42,7 +41,7 @@ export default (props: ContainerProps) => {
 
 
     return (
-        <div className="container-selected" id={props.id} >
+        <div className="merapi__editor-container container-selected" id={props.id} >
             <div className="component-icon" dangerouslySetInnerHTML={{ __html: icon }}></div>
             <div className="component-name">{name}</div>
         </div>

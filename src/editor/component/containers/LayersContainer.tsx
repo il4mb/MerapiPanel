@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { ContainerProps } from "../../Container";
-import { useRoot } from "../../RootEditor";
-// import "./LayersContainer.scss";
+import { useRoot } from "../../Root";
 
 export default (props: ContainerProps) => {
 
@@ -12,6 +11,6 @@ export default (props: ContainerProps) => {
     }
 
     return (
-        <div className="container-layers hide" id={props.id} ></div>
+        <div className="merapi__editor-container container-layers hide" id={props.id} ></div>
     )
 }

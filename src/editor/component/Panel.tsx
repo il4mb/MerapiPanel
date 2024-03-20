@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect } from "react";
 import { ContainerProps } from "../Container";
-import { useRoot } from "../RootEditor";
+import { useRoot } from "../Root";
 import { Editor } from "grapesjs";
 import { ButtonProps } from "./Button";
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -47,7 +47,11 @@ const registerPanel = (editor: Editor, id: string, btnProps: ButtonProps[]) => {
             return {
                 id: btn.id,
                 className: btn.className,
-                label: typeof btn.children === 'string' ? btn.children : renderToStaticMarkup(btn.children),
+                label: (() => {
+                    const v = btn.children === 'string' ? btn.children : renderToStaticMarkup(btn.children);
+                    // console.log(v);
+                    return v;
+                })(), // as a function for development
                 command: btn.command,
                 attributes: btn.attributes,
                 active: btn.active,

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useRoot } from "../RootEditor";
+import { useRoot } from "../Root";
 import { Component } from "grapesjs";
 
 

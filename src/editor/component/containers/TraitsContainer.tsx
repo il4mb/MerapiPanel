@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ContainerProps } from "../../Container";
-import { useRoot } from "../../RootEditor";
+import { useRoot } from "../../Root";
 
 
 
@@ -13,6 +13,6 @@ export default (props: ContainerProps) => {
     }
 
     return (
-        <div className="container-traits" id={props.id}></div>
+        <div className="merapi__editor-container container-traits" id={props.id}></div>
     )
 }

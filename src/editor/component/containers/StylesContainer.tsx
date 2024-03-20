@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { ContainerProps } from '../../Container';
-import { useRoot } from '../../RootEditor';
-// import "./StyleContainer.scss";
+import { useRoot } from '../../Root';
 
 export default (props: ContainerProps) => {
 
@@ -22,6 +21,6 @@ export default (props: ContainerProps) => {
     }
 
     return (
-        <div className='container-styles' id={props.id} ></div>
+        <div className='merapi__editor-container container-styles' id={props.id} ></div>
     )
 };

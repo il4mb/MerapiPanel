@@ -1,5 +1,4 @@
-export { RootElement } from "./editor/Root";
-export { RootEditor, useRoot, isObject, deepMerge, findCanvasTypeInChildren } from "./editor/RootEditor";
+export { RootElement, useRoot, isObject, deepMerge } from "./editor/Root";
 export { LayoutRow } from "./editor/LayoutRow";
 export { Layout } from "./editor/Layout";
 export { Container } from "./editor/Container";
