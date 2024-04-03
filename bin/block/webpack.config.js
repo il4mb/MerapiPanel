@@ -9,15 +9,14 @@ module.exports = {
     entry: { ...scanner.getEntry() },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(process.cwd(), './'),
         asyncChunks: false,
     },
 
 
     plugins: [
         new MiniCssExtractPlugin(),
-        new LodashModule(),
-        //new CleanWebpackPlugin()
+        new LodashModule()
     ],
     module: {
         rules: [
@@ -48,8 +47,11 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
-
+        extensions: ['.tsx', '.ts', '.js', '.json'],
+        alias: {
+            // Replace imports from 'src' with 'dist'
+            src: path.resolve(__dirname, 'dist'),
+        },
     },
     watch: true, // Enable watch mode
     watchOptions: {

@@ -5,6 +5,10 @@ const args = process.argv.slice(2);
 
 switch (args[0]) {
 
+    case "create-module": {
+        require("./create-module/index.js");
+        break;
+    }
     case "block": {
         require("./block/index.js");
         break;
@@ -22,6 +26,7 @@ switch (args[0]) {
         console.log("Usage:");
         console.log(`  merapipanel ${colours.fg.green}block${colours.reset}`);
         console.log(`  merapipanel ${colours.fg.green}theme${colours.reset}`);
+        console.log(`  merapipanel ${colours.fg.green}create-module${colours.reset}`);
         break;
     }
 }

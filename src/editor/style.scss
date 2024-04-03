@@ -1,7 +1,12 @@
 @use "sass:color";
 
-@import "./scss/variable";
 @import "grapesjs/src/styles/scss/main.scss";
+
+@import "./scss/variable";
+
+
+
+
 
 @mixin customScrollbar($width: 8px, $rounded: 0, $thumbColor: #0080ff, $trackColor: transparent) {
     & {

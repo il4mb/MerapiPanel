@@ -7,7 +7,7 @@ export const LoadingScreen = () => {
     const { progress } = useRoot();
 
     useEffect(() => {
-        console.log("PROGRESS", progress);
+       // console.log("PROGRESS", progress);
         if (progress === 100) {
             document.querySelector('.loading-screen')?.classList.add('hide');
             setTimeout(() => {

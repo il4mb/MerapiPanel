@@ -3,6 +3,22 @@ interface FetchWithProgress {
     onProgress: (loaded: number, total: number) => void;
 }
 
+export type JSONResponse = {
+    code: number;
+    message: string;
+    data: any;
+}
+
+export function getParameterByName(name: string, url: string) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
 export async function fetchWithProgress({ url, onProgress }: FetchWithProgress): Promise<Response> {
     const response = await fetch(url);
 

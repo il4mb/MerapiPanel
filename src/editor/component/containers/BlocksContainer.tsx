@@ -16,37 +16,25 @@ export default (props: ContainerProps) => {
 
     config.blockManager = {
         appendTo: '.container-blocks',
+
+        blocks: [
+            {
+                id: 'header',
+                label: 'Header',
+                
+                category: 'Text',
+                content: {
+                    type: 'header'
+                }
+            }
+        ]
+        
     }
 
 
     useEffect(() => {
 
         if (editor === null) return;
-
-        editor.Components.addType('header', {
-            tagName: 'h1',
-            isComponent: el => {
-                return el.tagName === 'H1' || el.tagName === 'H2' || el.tagName === 'H3' || el.tagName === 'H4' || el.tagName === 'H5' || el.tagName === 'H6'
-            },
-            model: {
-                defaults: {
-                    tagName: 'h1',
-                    content: 'hello world'
-                }
-            },
-            extend: 'text',
-
-        } as AddComponentTypeOptions);
-
-
-        editor.BlockManager.add('header', {
-            id: 'header',
-            label: 'Header',
-            category: 'Text',
-            content: {
-                type: 'header'
-            }
-        });
 
         editor.setComponents(editor.getHtml());
 

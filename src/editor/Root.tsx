@@ -1,5 +1,7 @@
 import grapesjs, { Editor, EditorConfig } from "grapesjs";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import BlockProvider from "./block/Block";
+import plugin_blocks_basic from 'grapesjs-blocks-basic';
 
 
 export function isObject(item: any) {
@@ -80,7 +82,8 @@ export interface RootConfig {
     canvasRef: React.RefObject<HTMLDivElement>,
     editor: Editor | null,
     setEditor: React.Dispatch<React.SetStateAction<Editor | null>>,
-    config: EditorConfig
+    config: EditorConfig,
+    [key: string]: any
 }
 
 
@@ -94,7 +97,8 @@ export const useRoot = () => useContext(RootContex);
 export interface RootElementProps {
     children?: React.ReactElement[],
     onReady?: (config: RootConfig) => void,
-    config?: EditorConfig
+    config?: EditorConfig,
+    [key: string]: any
 }
 
 
@@ -115,19 +119,7 @@ export const RootElement = function (props: RootElementProps) {
         setEditor,
         config: {
             fromElement: true,
-            height: '100%',
-            width: "100%",
-            storageManager: false,
-            layerManager: {
-                stylePrefix: "merapi__editor-"
-            },
-            stylePrefix: "merapi__editor-",
-            cssIcons: undefined,
-            colorPicker: {
-                containerClassName: 'color-picker',
-            },
-            // Avoid any default panel
-            panels: { defaults: [] },
+            plugins: [plugin_blocks_basic],
         }
     };
 
@@ -168,9 +160,10 @@ export const RootElement = function (props: RootElementProps) {
 
     return (
         <RootContex.Provider value={initial}>
-            <div className="merapi__editor">
-                {props.children}
-            </div>
+            {/* <div className="merapi__editor"> */}
+            {props.children}
+            {/* </div> */}
+            {/* <BlockProvider /> */}
         </RootContex.Provider>
     )
 }

@@ -30,8 +30,6 @@ module.exports = {
                 entry[toRelativePath(path.resolve(target_dirname, "view"))] = toRelativePath(path.resolve(source_dirname, (block.view).replace(/file:/, '')).replace(/\.js$/, ''));
             }
         });
-
-        console.log(entry);
         
         return entry;
     }
