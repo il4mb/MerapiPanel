@@ -6,36 +6,8 @@
   "author": "il4mb",
   "license": "ISC",
   "main": "dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./tools": {
-      "import": "./dist/tools",
-      "types": "./dist/tools.d.ts"
-    },
-    "./editor": {
-      "import": "./dist/editor/index.js",
-      "types": "./dist/editor/index.d.ts"
-    },
-    "./editor/style": {
-      "import": "./dist/editor/style.css"
-    },
-    "./block": {
-      "import": "./dist/editor/block/index.js",
-      "types": "./dist/editor/block/index.d.ts"
-    }
-  },
   "bin": {
     "merapipanel": "bin/index.js"
-  },
-  "scripts": {
-    "clean": "npx rimraf dist",
-    "build:css": "node-sass ./src --include-path node_modules -o ./dist --output-style compressed"
   },
   "repository": {
     "type": "git",

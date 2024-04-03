@@ -9,13 +9,8 @@ switch (args[0]) {
         require("./create-module/index.js");
         break;
     }
-    case "--build": {
-        require("./block/index.js");
-        break;
-    }
-
-    case "--watch": {
-        require("./theme/index.js");
+    case "module": {
+        require("./module/index.js");
         break;
     }
 
@@ -25,8 +20,7 @@ switch (args[0]) {
         }
         console.log("Usage:");
         console.log(`  merapipanel ${colours.fg.green}create-module${colours.reset} <module-name>`);
-        console.log(`  merapipanel ${colours.fg.green}--build${colours.reset}`);
-        console.log(`  merapipanel ${colours.fg.green}--watch${colours.reset}`);
+        console.log(`  merapipanel ${colours.fg.green}module${colours.reset} <option> <module-name>`);
         break;
     }
 }
