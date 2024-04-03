@@ -9,12 +9,12 @@ switch (args[0]) {
         require("./create-module/index.js");
         break;
     }
-    case "block": {
+    case "--build": {
         require("./block/index.js");
         break;
     }
 
-    case "theme": {
+    case "--watch": {
         require("./theme/index.js");
         break;
     }
@@ -24,9 +24,9 @@ switch (args[0]) {
             console.log("Unknown command: " + colours.fg.red + args[0], colours.reset);
         }
         console.log("Usage:");
-        console.log(`  merapipanel ${colours.fg.green}block${colours.reset}`);
-        console.log(`  merapipanel ${colours.fg.green}theme${colours.reset}`);
-        console.log(`  merapipanel ${colours.fg.green}create-module${colours.reset}`);
+        console.log(`  merapipanel ${colours.fg.green}create-module${colours.reset} <module-name>`);
+        console.log(`  merapipanel ${colours.fg.green}--build${colours.reset}`);
+        console.log(`  merapipanel ${colours.fg.green}--watch${colours.reset}`);
         break;
     }
 }
