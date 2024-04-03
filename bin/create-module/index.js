@@ -56,11 +56,13 @@ if (!moduleName) {
     process.exit(1);
 }
 
+
 if (fs.existsSync(path.join(cwd, "include", "module"))) {
     if (!fs.existsSync(path.join(cwd, "include", "module", moduleName))) {
-        fs.mkdirSync(path.join(cwd, "include", "module", moduleName));
 
+        fs.mkdirSync(path.join(cwd, "include", "module", moduleName));
         initial_create(path.join(cwd, "include", "module", moduleName));
+        console.log(`Module ${moduleName} created!\ngoto ${cwd}/include/module/${moduleName} to edit it`);
     } else {
         console.log("Module with this name already exists");
         process.exit(1);
@@ -68,10 +70,8 @@ if (fs.existsSync(path.join(cwd, "include", "module"))) {
 } else if (!fs.existsSync(path.join(cwd, moduleName))) {
     fs.mkdirSync(path.join(cwd, moduleName));
     initial_create(path.join(cwd, moduleName));
+    console.log(`Module ${moduleName} created!\ngoto ${cwd}/${moduleName} to edit it`);
 } else {
     console.log("Module with this name already exists");
     process.exit(1);
 }
-
-
-console.log(`Module ${moduleName} created!`);
