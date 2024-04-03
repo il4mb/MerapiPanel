@@ -28,11 +28,11 @@ const minimal_files = [
 
     {
         name: "Controller/Guest.php",
-        content: `<?php\nnamespace MerapiPanel\\Module\\${moduleName}\\Controller;\n\nuse MerapiPanel\\Box\\Module\\__Controller;\nuse MerapiPanel\\Views\\View;\nuse MerapiPanel\\Utility\\Router;\n\nclass Guest extends __Controller\n{\n\n\tfunction register()\n\t{\n\t\tRouter::GET("/", "index", self::class);\n\t\t// register other route\n\t}\n\tfunction index()\n\t{\n\t\treturn View::render("index.html.twig");\n\t}\n}`,
+        content: `<?php\nnamespace MerapiPanel\\Module\\${moduleName}\\Controller;\n\nuse MerapiPanel\\Box\\Module\\__Controller;\nuse MerapiPanel\\Views\\View;\nuse MerapiPanel\\Utility\\Router;\n\nclass Guest extends __Controller\n{\n\n\tfunction register()\n\t{\n\t\tRouter::GET("/${moduleName}", "index", self::class);\n\t\t// register other route\n\t}\n\tfunction index()\n\t{\n\t\treturn View::render("index.html.twig");\n\t}\n}`,
     },
     {
         name: "Controller/Admin.php",
-        content: `<?php\nnamespace MerapiPanel\\Module\\${moduleName}\\Controller;\n\nuse MerapiPanel\\Box\\Module\\__Controller;\nuse MerapiPanel\\Views\\View;\nuse MerapiPanel\\Utility\\Router;\n\nclass Admin extends __Controller\n{\n\n\tfunction register()\n\t{\n\t\tRouter::GET("/", "index", self::class);\n\t\t// register other route\n\t}\n\tfunction index()\n\t{\n\t\treturn View::render("index.html.twig");\n\t}\n}`,
+        content: `<?php\nnamespace MerapiPanel\\Module\\${moduleName}\\Controller;\n\nuse MerapiPanel\\Box\\Module\\__Controller;\nuse MerapiPanel\\Views\\View;\nuse MerapiPanel\\Utility\\Router;\n\nclass Admin extends __Controller\n{\n\n\tfunction register()\n\t{\n\t\tRouter::GET("/${moduleName}", "index", self::class);\n\t\t// register other route\n\t}\n\tfunction index()\n\t{\n\t\treturn View::render("index.html.twig");\n\t}\n}`,
     },
     {
         name: "/Service.php",
