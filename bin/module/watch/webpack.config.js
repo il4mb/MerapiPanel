@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const entry = require('./entry.js');
 
+
 const files_entry = {
     ...entry.assets_entry(),
     ...entry.widgets_entry(),

@@ -29,7 +29,7 @@ const assets_entry = function () {
 
 
 const widgets_entry = function () {
-    return glob.sync(path.join(module_dir, "Widgets", "**", "src", "index.{js,ts}"), {
+    return glob.sync(path.join(module_dir, "Widgets", "**", "src", "*.{js,ts}"), {
         ignore: ['./node_modules/**', './dist/**', './.git/**', './.vscode/**', './.vscode-test/**', './vendor/**', './tests/**'], // Ignore node_modules directory
         nodir: true, // Treat directories as files
         maxDepth: 2 // Limit the depth of the search to 2 directory levels
@@ -43,7 +43,7 @@ const widgets_entry = function () {
 
 
 const blocks_entry = function () {
-    return glob.sync(path.join(module_dir, "Blocks", "**", "src", "index.{js,ts}"), {
+    return glob.sync(path.join(module_dir, "Blocks", "**", "src", "*.{js,ts}"), {
         ignore: ['./node_modules/**', './dist/**', './.git/**', './.vscode/**', './.vscode-test/**', './vendor/**', './tests/**'], // Ignore node_modules directory
         nodir: true, // Treat directories as files
         maxDepth: 2 // Limit the depth of the search to 2 directory levels

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const moduleName = process.argv[3];
+const _moduleName = (process.argv[3]).replace(/[^a-zA-Z0-9]+/g, '_').toLowerCase();
+const moduleName = _moduleName.charAt(0).toUpperCase() + _moduleName.slice(1);
 const cwd = process.cwd();
 
 
@@ -9,6 +10,9 @@ const minimal_folder = [
     "Assets/src",
     "Blocks",
     "Widgets",
+    "Widgets/hallo",
+    "Widgets/hallo/src",
+    "Widgets/hallo/dist",
     "Views",
     "Controller",
 ];
@@ -24,6 +28,28 @@ const minimal_files = [
     {
         name: "Views/index.html.twig",
         content: `<div class="d-flex align-content-center" style="min-height: 700px; width: 100%">\n\t<div class="text-center">\n\t\t<h2 class="fs-2 fw-bold">Coming Soon</h2>\n\t\t<p>this is base template, you should not see this</p>\n\t</div>\n</div>`,
+    },
+
+    {
+        name: "Widgets/hallo/src/style.scss",
+        content: `.widget-${_moduleName}-hallo {\n\tcolor: red;\n}`,
+    },
+
+    {
+        name: "Widgets/hallo/src/index.js",
+        content: `import "./style.scss;\n\nconsole.log("hello world from module ${moduleName} with widget hallo");\n\n// write your code here";`
+    },
+    {
+        name: "Widgets/hallo/index.php",
+        content: `<?php\n\nreturn [\n\t'name' => '@${_moduleName}/hallo',\n\t'title' => 'hallo widget',\n\t'category' => 'default',\n\t'description' => 'sample widget from module ${moduleName}'\n];`
+    },
+    {
+        name: "Widgets/hallo/render.php",
+        content: `<?php\n// write logic here\n?>\n<div class="widget-${_moduleName}-hallo">hello world</div>`
+    },
+    {
+        name: "Widgets/index.php",
+        content: `<?php\n\nreturn (array_map(function ($file) {\n\treturn require_once $file;}, glob(__DIR__ . '/**/index.php', GLOB_BRACE)));`
     },
 
     {
