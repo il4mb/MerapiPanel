@@ -63,7 +63,7 @@ const minimal_files = [
     },
     {
         name: "/Service.php",
-        content: `<?php\nnamespace MerapiPanel\\Module\\${moduleName};\n\nuse MerapiPanel\\Box\\Module\\__Fragment;\nuse MerapiPanel\\Box\\Module\\Entity\\Module;\n\nclass ${moduleName} extends __Fragment {\n\tprotected Module $module;\n\tfunction onCreate(Module $module) {\n\t\t$this->module = $module;\n\t}\n\n\t// add other funstion here\n\n}`,
+        content: `<?php\nnamespace MerapiPanel\\Module\\${moduleName};\n\nuse MerapiPanel\\Box\\Module\\__Fragment;\nuse MerapiPanel\\Box\\Module\\Entity\\Module;\n\nclass Service extends __Fragment {\n\tprotected Module $module;\n\tfunction onCreate(Module $module) {\n\t\t$this->module = $module;\n\t}\n\n\t// add other funstion here\n\n}`,
     }
 ];
 
