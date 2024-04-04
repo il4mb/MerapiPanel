@@ -3,6 +3,7 @@ const path = require("path");
 const _moduleName = (process.argv[3]).replace(/[^a-zA-Z0-9]+/g, '_').toLowerCase();
 const moduleName = _moduleName.charAt(0).toUpperCase() + _moduleName.slice(1);
 const cwd = process.cwd();
+const colours = require("../conlor.js");
 
 
 const minimal_folder = [
@@ -32,12 +33,12 @@ const minimal_files = [
 
     {
         name: "Widgets/hallo/src/style.scss",
-        content: `.widget-${_moduleName}-hallo {\n\tcolor: red;\n}`,
+        content: `html, body {\n\theight: 100vh;\n\twidth: 100vw;\n\tmargin: 0;\n\tpadding: 0;\n}\n.widget-sample-hallo {\n\theight: 100vh;\n\tcolor: red;\n\tfont-weight: 700;\n\tfont-size: 25px;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}`,
     },
 
     {
         name: "Widgets/hallo/src/index.js",
-        content: `import "./style.scss;\n\nconsole.log("hello world from module ${moduleName} with widget hallo");\n\n// write your code here";`
+        content: `import "./style.scss";\n\nconsole.log("hello world from module ${moduleName} with widget hallo");\n\n// write your code here";`
     },
     {
         name: "Widgets/hallo/index.php",
@@ -88,7 +89,11 @@ if (fs.existsSync(path.join(cwd, "include", "module"))) {
 
         fs.mkdirSync(path.join(cwd, "include", "module", moduleName));
         initial_create(path.join(cwd, "include", "module", moduleName));
-        console.log(`Module ${moduleName} created!\ngoto ${cwd}/include/module/${moduleName} to edit it`);
+        console.log(`Module ${colours.fg.green}${moduleName}${colours.reset} created!.`);
+        console.log(`Goto ${colours.fg.green}${cwd}/include/module/${moduleName}${colours.reset} to edit it.`);
+        console.log("Command: ");
+        console.log(`   watch: ${colours.fg.green}npx ${colours.reset}MerapiPanel ${colours.fg.magenta}module ${colours.fg.blue}--watch ${colours.fg.magenta}${moduleName}${colours.reset}`);
+        console.log(`   build: ${colours.fg.green}npx ${colours.reset}MerapiPanel ${colours.fg.magenta}module ${colours.fg.blue}--build ${colours.fg.magenta}${moduleName}${colours.reset}`);
     } else {
         console.log("Module with this name already exists");
         process.exit(1);
@@ -96,7 +101,8 @@ if (fs.existsSync(path.join(cwd, "include", "module"))) {
 } else if (!fs.existsSync(path.join(cwd, moduleName))) {
     fs.mkdirSync(path.join(cwd, moduleName));
     initial_create(path.join(cwd, moduleName));
-    console.log(`Module ${moduleName} created!\ngoto ${cwd}/${moduleName} to edit it`);
+    console.log(`Module ${colours.fg.green}${moduleName}${colours.reset} created!.`);
+    console.log(`Goto ${colours.fg.green}${cwd}/include/module/${moduleName}${colours.reset} to edit it.`);
 } else {
     console.log("Module with this name already exists");
     process.exit(1);
