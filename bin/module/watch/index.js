@@ -4,24 +4,19 @@ const colours = require('../../conlor.js');
 const cwd = process.cwd();
 
 const moduleName = process.argv[4];
-if (!moduleName) {
-    console.log(`Usage: MerapiPanel ${colours.fg.magenta}module ${colours.fg.blue}--watch ${colours.fg.magenta}<module-name>${colours.reset}`);
-    process.exit(1);
-}
+// if (!moduleName) {
+//     console.log(`Usage: MerapiPanel ${colours.fg.magenta}module ${colours.fg.blue}--watch ${colours.fg.magenta}<module-name>${colours.reset}`);
+//     process.exit(1);
+// }
 
-
-if (!fs.existsSync(path.join(cwd, "include", "Module", moduleName))) {
-    console.log("cant find module ", moduleName);
-    process.exit(1);
-}
-
+const working_dir = moduleName ? path.join(cwd, "include", "Module", moduleName) : cwd;
 
 
 const webpack = require('webpack');
 const config = require('./webpack.config.js');
 
 
-console.log(`Working directory: ${colours.fg.green} ${path.join(cwd, "include", "Module", moduleName)} ${colours.reset}`);
+console.log(`Working directory: ${colours.fg.green} ${working_dir} ${colours.reset}`);
 
 config.watch = true;
 

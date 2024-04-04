@@ -12,8 +12,8 @@ const files_entry = {
 };
 
 const moduleName = process.argv[4];
-const output_dir = path.join(process.cwd(), "include", "Module", moduleName);
-if (!fs.existsSync(output_dir)) {
+const output_dir = moduleName ? path.join(process.cwd(), "include", "Module", moduleName) : process.cwd();
+if (moduleName && !fs.existsSync(output_dir)) {
     console.error(`Module ${moduleName} not found`);
     process.exit(1);
 }
@@ -25,7 +25,7 @@ module.exports = {
     entry: { ...files_entry },
     output: {
         filename: '[name].js',
-        path: path.resolve(output_dir, '../../../'),
+        path: path.resolve(output_dir, (moduleName ? '../../../' : ".")),
         asyncChunks: false,
     },
 
