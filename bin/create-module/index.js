@@ -33,7 +33,7 @@ const minimal_files = [
 
     {
         name: "Widgets/hallo/src/style.scss",
-        content: `html, body {\n\theight: 100vh;\n\twidth: 100vw;\n\tmargin: 0;\n\tpadding: 0;\n}\n.widget-${_moduleName}-hallo {\n\theight: 100vh;\n\tcolor: red;\n\tfont-weight: 700;\n\tfont-size: 25px;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}`,
+        content: `html, body {\n\theight: 100vh;\n\twidth: 100vw;\n\tmargin: 0;\n\tpadding: 0;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}\n.widget-${_moduleName}-hallo {\n\theight: 100vh;\n\tcolor: red;\n\tfont-weight: 700;\n\tfont-size: 25px;\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n}`,
     },
 
     {
