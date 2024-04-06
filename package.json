@@ -10,12 +10,16 @@
     "merapipanel": "bin/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "scss"
   ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./scss/editor": {
+      "import": "./scss/editor/index.js"
     },
     "./editor": {
       "import": "./dist/editor/index.js",
@@ -24,9 +28,6 @@
     "./editor/partial": {
       "import": "./dist/editor/partial/index.js",
       "types": "./dist/editor/partial/index.d.ts"
-    },
-    "./editor/scss": {
-      "import": "./src/editor/scss/index.js"
     },
     "./editor/plugins": {
       "import": "./dist/editor/plugins/index.js",

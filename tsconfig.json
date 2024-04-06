@@ -2,7 +2,7 @@
   
   "include": [
     "src"
-  ],
+, "scss"  ],
   "compilerOptions": {
     "outDir": "dist",
     "target": "esnext",
