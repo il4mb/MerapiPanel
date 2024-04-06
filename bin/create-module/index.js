@@ -98,12 +98,7 @@ if (fs.existsSync(path.join(cwd, "include", "module"))) {
         console.log("Module with this name already exists");
         process.exit(1);
     }
-} else if (!fs.existsSync(path.join(cwd, moduleName))) {
-    fs.mkdirSync(path.join(cwd, moduleName));
-    initial_create(path.join(cwd, moduleName));
-    console.log(`Module ${colours.fg.green}${moduleName}${colours.reset} created!.`);
-    console.log(`Goto ${colours.fg.green}${cwd}/include/module/${moduleName}${colours.reset} to edit it.`);
 } else {
-    console.log("Module with this name already exists");
+    console.log("create module must be in MerapiPanel directory");
     process.exit(1);
 }

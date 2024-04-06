@@ -20,7 +20,7 @@ switch (args[0]) {
         }
         console.log("Usage:");
         console.log(`  merapipanel ${colours.fg.green}create-module${colours.reset} <module-name>`);
-        console.log(`  merapipanel ${colours.fg.green}module${colours.reset} <option> <module-name>`);
+        console.log(`  merapipanel ${colours.fg.green}module${colours.reset} <module-name> <option>`);
         break;
     }
 }
