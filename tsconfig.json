@@ -1,8 +1,7 @@
 {
-  
   "include": [
     "src"
-, "scss"  ],
+  ],
   "compilerOptions": {
     "outDir": "dist",
     "target": "esnext",
@@ -19,7 +18,6 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    
   },
   "types": [
     "typePatches"
@@ -27,6 +25,7 @@
   "exclude": [
     "node_modules",
     "bin",
-    "dist"
-]
+    "dist",
+    "scss"
+  ]
 }
