@@ -1,0 +1,270 @@
+$prefix: "editor-";
+$primary-color: #f3f8ff;
+$secondary-color: rgb(0, 0, 0); // for text || typografi
+$tertiary-color: #000000;
+$quaternary-color: #0084ff;
+
+:root {
+    --gjs-primary-color: #{$primary-color};
+    --gjs-secondary-color: #{$secondary-color};
+    --gjs-tertiary-color: #{$tertiary-color};
+    --gjs-quaternary-color: #{$quaternary-color};
+}
+/* Let's highlight canvas boundaries */
+#gjs {
+    border: 3px solid #444;
+}
+
+/* Reset some default styling */
+.gjs-cv-canvas {
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.gjs-category-title,
+.gjs-layer-title,
+.gjs-block-category .gjs-title,
+.gjs-sm-sector-title,
+.gjs-trait-category .gjs-title {
+    font-weight: normal;
+}
+
+.#{$prefix}app {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #28333d;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: stretch;
+    &.preview-mode {
+        & .#{$prefix}sidebar {
+            display: none;
+        }
+    }
+}
+
+.#{$prefix}body {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    flex: 1;
+}
+
+.#{$prefix}navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #{$primary-color};
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    & .#{$prefix}panel {
+        position: relative;
+    }
+}
+
+.#{$prefix}sidebar {
+    flex-basis: 250px;
+    width: 100%;
+    max-width: 250px;
+    overflow: auto;
+    background-color: #{$primary-color};
+    box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.#{$prefix}layout {
+    display: block;
+    &.hide {
+        display: none;
+    }
+}
+
+.#{$prefix}canvas-wrapper {
+    flex: 1;
+    margin: 0.25rem;
+    width: 100%;
+    position: relative;
+    & .#{$prefix}canvas {
+        width: 100% !important;
+        height: 100% !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    & .gjs-editor {
+        background-color: transparent;
+        & .gjs-cv-canvas {
+            background-color: transparent;
+        }
+    }
+}
+
+// PLUGIN CODE EDITOR
+.code-editor-modal {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(0.25px);
+    & .gjs-mdl-dialog {
+        max-width: 100vw;
+        width: 100%;
+        margin-bottom: 0;
+        background-color: #14171b;
+        color: #fff;
+        & .gjs-mdl-content {
+            background-color: #14171b;
+            height: 350px;
+            padding: 0;
+            color: #fff;
+        }
+    }
+    & .code-editor-wrapper {
+        display: flex;
+        flex-direction: row;
+        height: 320px;
+        overflow: hidden;
+        & .code-editor {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            flex: auto;
+            & .code-title {
+                background-color: #28333d;
+                color: #fff;
+                font-weight: 600;
+                padding: 0.15rem 0.25rem;
+                transform: rotate(0deg);
+                transition: all 0.25s;
+                display: flex;
+                align-items: center;
+                align-content: center;
+            }
+
+            & .code-toolbar {
+                margin-left: auto;
+                & .toolbar-btn {
+                    color: #fff;
+                    border: none;
+                    outline: none;
+                    background-color: rgba(0, 0, 0, 0.2);
+                    cursor: pointer;
+                    border-radius: 0.15rem;
+                    
+                    &:hover {
+                        background-color: #0084ff;
+                    }
+                    &.active {
+                        background-color: #0084ff;
+                    }
+                }
+            }
+            & .code-content {
+                flex: 1;
+                overflow: auto;
+                background-color: #14171b;
+                color: #fff;
+                font-size: 9.5px;
+                display: flex;
+                flex-direction: column;
+                & .cm-editor {
+                    flex: 1;
+                }
+            }
+            & .code-content-wrapper {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                & .code-content {
+                    flex: 1;
+                }
+                & .code-console {
+                    flex-basis: 0;
+                    background-color: #eeeeee;
+                    color: #000;
+                    font-size: 9.5px;
+                    display: flex;
+                    flex-direction: column;
+                    transition: 0.2s;
+                    &.active {
+                        flex-basis: 100px;
+                    }
+                    & .cm-editor {
+                        flex: 1;
+                    }
+                }
+            }
+            &.closed {
+                position: relative;
+                & .code-title {
+                    position: absolute;
+                    top: 0;
+                    left: 100%;
+                    transform: rotate(90deg);
+                    transform-origin: top left;
+                    z-index: 20;
+                    background-color: transparent;
+                    & .code-toolbar {
+                        display: none;
+                    }
+                }
+                & .code-content {
+                    display: none;
+                }
+                & .code-content-wrapper {
+                    display: none;
+                }
+            }
+        }
+
+        & .code-divider {
+            width: 8px;
+            background-color: #28333d;
+            cursor: col-resize;
+            height: 100%;
+
+            &:hover {
+                background-color: #0084ff6b;
+            }
+            &.active {
+                background-color: #0084ff !important;
+            }
+        }
+        &:has(.code-divider.active) {
+            cursor: col-resize;
+            & .code-divider:not(.active) {
+                background-color: #28333d !important;
+            }
+        }
+    }
+}
+
+// CODEMIRROR
+.ͼ2 .cm-gutters {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+}
+.ͼ2 .cm-activeLineGutter {
+    background-color: #668090;
+    color: white;
+}
+.cm-line {
+    color: #e4e4e4;
+}
+.ͼe {
+    color: #f4af4b;
+}
+.ͼi {
+    color: #3eb588;
+}
+.cm-tooltip.cm-tooltip-autocomplete {
+    background-color: #28333d;
+}
+.ͼc {
+    color: #9082f0;
+}
+.ͼb {
+    color: #c437d8;
+}
+.ͼg {
+    color: #6a9ff2;
+}

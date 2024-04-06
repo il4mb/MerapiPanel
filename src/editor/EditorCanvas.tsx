@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from "react";
-import { useContainer } from "./Container";
 import grapesjs from "grapesjs";
+import { useApp } from "./App";
 
 
 export const EditorCanvas = () => {
-    const { config, setContainer, editor, setEditor, needReload } = useContainer();
+    const { config, setContainer, editor, setEditor, needReload } = useApp();
     const ref = useRef(null);
 
 
@@ -12,8 +12,8 @@ export const EditorCanvas = () => {
 
         if (!ref.current || !needReload) return;
 
-        if(editor) editor.destroy();
-        const initialEditor = grapesjs.init(config);
+        if (editor) editor.destroy();
+        const initialEditor = grapesjs.init(config as any);
         setEditor(initialEditor);
 
     }, [needReload]);
@@ -23,5 +23,9 @@ export const EditorCanvas = () => {
         setContainer(ref.current as any);
     }, [ref]);
 
-    return <div ref={ref} className="editor-canvas"></div>;
+    return (
+        <div className="editor-canvas-wrapper">
+            <div ref={ref} className="editor-canvas"></div>
+        </div>
+    );
 };

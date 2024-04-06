@@ -1,9 +1,9 @@
-import { Command, CommandObject, CommandsConfig } from "grapesjs";
+import { Command, CommandObject, CommandOptions, CommandsConfig } from "grapesjs";
 import React from "react";
 
 export interface BtnProps {
     id: string,
-    command?: CommandObject,
+    command?: CommandOptions | CommandObject,
     active?: boolean,
     togglable?: boolean,
     children?: React.ReactNode|string

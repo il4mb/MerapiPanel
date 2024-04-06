@@ -1,6 +1,6 @@
-export * from "./Container";
-export * from "./BlockLayout";
+export * from "./EditorBody";
 export * from "./EditorCanvas";
 export * from "./Navbar";
-export * from "./Panel";
+export * from "./Sidebar";
+export * from "./App";
 export * as partial from "./partial";
