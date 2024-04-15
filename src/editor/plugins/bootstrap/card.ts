@@ -16,16 +16,17 @@ export const Register = (editor: Editor) => {
                 attributes: { class: 'card' },
                 components: [
                     {
-                        type: 'card-header',
+                        type: 'bs-card-header',
                         components: [
                             {
-                                type: 'text',
+                                type: 'heading',
+                                tagName: 'h4',
                                 components: 'Card Header'
                             }
                         ]
                     },
                     {
-                        type: 'card-body',
+                        type: 'bs-card-body',
                         components: [
                             {
                                 type: 'text',

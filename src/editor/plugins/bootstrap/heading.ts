@@ -35,6 +35,10 @@ export const Register = (editor: Editor) => {
                 ]
             },
             init() {
+                setTimeout(() => {
+                    const initLevenl = this.get("tagName")?.replace('h', '') || 1;
+                    this.set("attributes", { level: initLevenl });
+                }, 300);
                 this.on('change:attributes:level', () => {
                     const level = this.get('attributes')?.level || 1;
                     this.set("tagName", `h${level}`);

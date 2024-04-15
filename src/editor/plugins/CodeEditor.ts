@@ -142,8 +142,9 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
                                 } finally {
                                     if (x > 0) return;
                                     editor.DomComponents.clear();
-                                    editor.setComponents(JSON.parse(jsonContent));
-                                    editor.setComponents(`<style>${cssContent}</style>`);
+                                    const components = JSON.parse(jsonContent);
+                                    editor.setComponents(components);
+                                    editor.setStyle(cssContent);
                                     editor.refresh();
                                 }
 
@@ -173,8 +174,9 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
                                 } finally {
                                     if (x > 0) return;
                                     editor.DomComponents.clear();
-                                    editor.setComponents(JSON.parse(jsonContent));
-                                    editor.setComponents(`<style>${cssContent}</style>`);
+                                    const components = JSON.parse(jsonContent);
+                                    editor.setComponents(components);
+                                    editor.setStyle(cssContent);
                                     editor.refresh();
                                 }
                             }, 1000);

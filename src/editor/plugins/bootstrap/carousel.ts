@@ -24,19 +24,19 @@ export const Register = (editor: Editor) => {
                 },
                 components: [
                     {
-                        type: 'carousel-inner',
+                        type: 'bs-carousel-inner',
                         components: [{
-                            type: 'carousel-item',
+                            type: 'bs-carousel-item'
                         }]
                     },
                     {
-                        type: 'carousel-indicators'
+                        type: 'bs-carousel-indicators'
                     },
                     {
-                        type: 'carousel-control-prev'
+                        type: 'bs-carousel-control-prev'
                     },
                     {
-                        type: 'carousel-control-next'
+                        type: 'bs-carousel-control-next'
                     }
                 ],
                 traits: [
@@ -70,17 +70,18 @@ export const Register = (editor: Editor) => {
 
             addItem() {
 
-                const inner = this.components().filter(comp => comp.get('type') === 'carousel-inner')[0];
+                const inner = this.components().filter(comp => comp.get('type') === 'bs-carousel-inner')[0];
 
                 if (inner) {
                     inner.components().add({
-                        type: 'carousel-item',
+                        type: 'bs-carousel-item'
+
                     });
                 } else {
                     this.components().add({
-                        type: 'carousel-inner',
+                        type: 'bs-carousel-inner',
                         components: [{
-                            type: 'carousel-item',
+                            type: 'bs-carousel-item',
                         }]
                     });
                 }
@@ -91,7 +92,7 @@ export const Register = (editor: Editor) => {
 
 
             render() {
-                const inner = this.model.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-inner')[0];
+                const inner = this.model.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
                 if (!inner) {
                     this.el.innerHTML = '';
                     this.el.appendChild((this.model as any).placeholder());
@@ -115,6 +116,7 @@ export const Register = (editor: Editor) => {
                 editable: false,
                 attributes: {
                     class: 'carousel-inner',
+                    style: "height: 300px;"
                 },
                 components: [],
             },
@@ -131,7 +133,7 @@ export const Register = (editor: Editor) => {
 
             addItem() {
                 this.components().add({
-                    type: 'carousel-item',
+                    type: 'bs-carousel-item',
                 })
             }
         }
@@ -150,13 +152,13 @@ export const Register = (editor: Editor) => {
                 copyable: false,
                 attributes: {
                     class: 'carousel-item',
-                    style: 'height: 500px;'
+                    style: "height: 100%"
                 },
                 components: {
                     type: 'image',
                     attributes: {
-                        class: "d-block w-100",
-                        style: "object-fit: cover;"
+                        style: "object-fit: cover;",
+                        class: "d-block w-100; height: 100%",
                     }
                 }
             },
@@ -166,7 +168,7 @@ export const Register = (editor: Editor) => {
                 setTimeout(() => {
                     const parent = this.parent(); // Get the parent component
                     if (parent) {
-                        const carouselItems = parent.components().filter(comp => comp.get('type') === 'carousel-item'); // Find all carousel-item components
+                        const carouselItems = parent.components().filter(comp => comp.get('type') === 'bs-carousel-item'); // Find all carousel-item components
 
                         // Remove 'active' class from all carousel-items
                         carouselItems.forEach(item => {
@@ -182,7 +184,7 @@ export const Register = (editor: Editor) => {
                 this.listenTo(this, 'remove', () => {
                     const parent = this.parent(); // Get the parent component
                     if (parent) {
-                        const carouselItems = parent.components().filter(comp => comp.get('type') === 'carousel-item'); // Find all carousel-item components
+                        const carouselItems = parent.components().filter(comp => comp.get('type') === 'bs-carousel-item'); // Find all carousel-item components
                         // Remove 'active' class from all carousel-items
                         carouselItems.forEach(item => {
                             const classes: any = item.getClasses();
@@ -211,8 +213,8 @@ export const Register = (editor: Editor) => {
                 this.components().add({
                     type: 'image',
                     attributes: {
+                        style: "object-fit: cover; height: 100%;",
                         class: "d-block w-100",
-                        style: "object-fit: cover;"
                     }
                 })
             },
@@ -324,7 +326,7 @@ export const Register = (editor: Editor) => {
                 setTimeout(() => {
                     const parent = this.parent(); // Get the parent component
                     if (parent) {
-                        const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-inner')[0];
+                        const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
                         if (inner) {
                             const items = inner.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-item') ?? [];
                             this.syncButtonWithInnerItems(items, parent.getId());
@@ -332,18 +334,18 @@ export const Register = (editor: Editor) => {
 
                         editor.on('component:mount', (component) => {
 
-                            if (component.get('type') === "carousel-item") {
-                                const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-inner')[0];
+                            if (component.get('type') === "bs-carousel-item") {
+                                const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
                                 if (inner) {
-                                    this.syncButtonWithInnerItems(inner.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-item') ?? [], parent.getId());
+                                    this.syncButtonWithInnerItems(inner.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-item') ?? [], parent.getId());
                                 }
                             }
                         });
                         editor.on('component:remove', (component) => {
                             if (component.get('type') === parent.get('type')) {
-                                const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-inner')[0];
+                                const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
                                 if (inner) {
-                                    this.syncButtonWithInnerItems(inner.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-item') ?? [], parent.getId());
+                                    this.syncButtonWithInnerItems(inner.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-item') ?? [], parent.getId());
                                 }
                             }
                         })
@@ -351,10 +353,14 @@ export const Register = (editor: Editor) => {
                 }, 200);
             },
 
+            placeholder() {
+                return "";
+            },
+
 
             syncButtonWithInnerItems(items: Component[], id: string) {
 
-                this.components().remove(this.components().filter((comp: any) => comp.get('type') === 'button'));
+                this.components().remove(this.components().filter((comp: any) => comp.get('type') === 'bs-button'));
 
                 items.forEach((item, index) => {
                     const isActive = item.getClasses().includes('active');
@@ -364,7 +370,7 @@ export const Register = (editor: Editor) => {
 
                     this.components().add({
                         tagName: 'button',
-                        type: 'button',
+                        type: 'bs-button',
                         attributes: {
                             class: buttonClass,
                             'data-bs-target': `#${id}`,
