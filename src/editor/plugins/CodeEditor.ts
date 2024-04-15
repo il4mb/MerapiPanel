@@ -1,10 +1,10 @@
 import { Editor } from "grapesjs";
 import { EditorView, basicSetup, minimalSetup } from 'codemirror';
 import { autocompletion } from "@codemirror/autocomplete"
-import { html } from '@codemirror/lang-html';
 import { css } from '@codemirror/lang-css';
+import { json } from '@codemirror/lang-json';
 import $ from "jquery";
-import { html_beautify, css_beautify } from "js-beautify";
+import { html_beautify, css_beautify, js_beautify } from "js-beautify";
 import type { Plugin } from 'grapesjs';
 
 
@@ -37,7 +37,7 @@ interface CodeEditorOptions {
 
 export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
 
-    var htmlContent = html_beautify(editor.getHtml(), beautyOptions);
+    var jsonContent = JSON.stringify(editor.getComponents(), null, 4);
     var cssContent = css_beautify(editor.getCss() || "", beautyOptions);
 
     if (options.allowScripts) {
@@ -50,8 +50,8 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
         run: async (editor: Editor, sender: any) => {
 
             const content = $(`<div class="code-editor-wrapper">
-                <div class="code-editor code-html">
-                    <div class="code-title">HTML</div>
+                <div class="code-editor code-json">
+                    <div class="code-title">JSON</div>
                     <div class="code-content"></div>
                 </div>
                 <div class="code-divider"></div>
@@ -117,31 +117,41 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
                 }
             });
 
-
-
-            htmlContent = html_beautify(editor.getHtml(), beautyOptions);
+            jsonContent = JSON.stringify(editor.getComponents(), null, 4);
             cssContent = css_beautify(editor.getCss() || "", beautyOptions);
 
+            var updateComponents: any = null;
+
             new EditorView({
-                doc: htmlContent,
+                doc: jsonContent,
                 extensions: [
                     basicSetup,
-                    html({
-                        matchClosingTags: true,
-                        autoCloseTags: true,
-                        selfClosingTags: true
-                    }),
+                    json(),
                     autocompletion(),
                     EditorView.updateListener.of((update) => {
                         if (update.docChanged) {
-                            htmlContent = update.state.doc.toString();
-                            editor.DomComponents.getWrapper()?.set("content", "");
-                            editor.CssComposer.getAll().reset();
-                            editor.setComponents(`<style>${cssContent}</style>\n${htmlContent}`);
+                            jsonContent = update.state.doc.toString();
+
+                            if (updateComponents) clearTimeout(updateComponents);
+                            updateComponents = setTimeout(() => {
+                                let x: number = 0;
+                                try {
+                                    JSON.parse(jsonContent);
+                                } catch (error) {
+                                    x++;
+                                } finally {
+                                    if (x > 0) return;
+                                    editor.DomComponents.clear();
+                                    editor.setComponents(JSON.parse(jsonContent));
+                                    editor.setComponents(`<style>${cssContent}</style>`);
+                                    editor.refresh();
+                                }
+
+                            }, 1000);
                         }
                     })
                 ],
-                parent: content.find("div.code-html .code-content")[0]
+                parent: content.find("div.code-json .code-content")[0]
             });
             new EditorView({
                 doc: cssContent,
@@ -152,9 +162,22 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
                     EditorView.updateListener.of((update) => {
                         if (update.docChanged) {
                             cssContent = update.state.doc.toString();
-                            editor.DomComponents.getWrapper()?.set("content", "");
-                            editor.CssComposer.getAll().reset();
-                            editor.setComponents(`<style>${cssContent}</style>\n${htmlContent}`);
+
+                            if (updateComponents) clearTimeout(updateComponents);
+                            updateComponents = setTimeout(() => {
+                                let x: number = 0;
+                                try {
+                                    JSON.parse(jsonContent);
+                                } catch (error) {
+                                    x++;
+                                } finally {
+                                    if (x > 0) return;
+                                    editor.DomComponents.clear();
+                                    editor.setComponents(JSON.parse(jsonContent));
+                                    editor.setComponents(`<style>${cssContent}</style>`);
+                                    editor.refresh();
+                                }
+                            }, 1000);
                         }
                     })
                 ],

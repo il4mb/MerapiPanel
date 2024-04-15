@@ -3,9 +3,10 @@ import { useApp } from "../App";
 
 export interface StyleManagerProps {
     className?: string
+    children?: any
 }
 
-export const StyleManager = ({ className }: StyleManagerProps = {}) => {
+export const StyleManager = ({ children, className }: StyleManagerProps = {}) => {
 
     const { classPrefix, setStyleManager } = useApp();
     const ref = useRef(null);
@@ -18,6 +19,8 @@ export const StyleManager = ({ className }: StyleManagerProps = {}) => {
     }, [ref.current]);
 
     return (
-        <div ref={ref} className={`${classPrefix}layout style-manager ${className || ""}`}></div>
+        <div ref={ref} className={`${classPrefix}layout style-manager ${className || ""}`}>
+            { children }
+        </div>
     )
 }

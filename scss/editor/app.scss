@@ -28,6 +28,16 @@ $quaternary-color: #0084ff;
 .gjs-trait-category .gjs-title {
     font-weight: normal;
 }
+.gjs-clm-tags {
+    & .gjs-clm-tag {
+        background: $quaternary-color;
+        color: #fff;
+        border-radius: 3px;
+    }
+    & #gjs-clm-new {
+        color: #0084ff;
+    }
+}
 
 .#{$prefix}app {
     width: 100vw;
@@ -99,6 +109,9 @@ $quaternary-color: #0084ff;
         }
     }
 }
+.#{$prefix}empty {
+    opacity: 0.5;
+}
 
 // PLUGIN CODE EDITOR
 .code-editor-modal {
@@ -148,7 +161,7 @@ $quaternary-color: #0084ff;
                     background-color: rgba(0, 0, 0, 0.2);
                     cursor: pointer;
                     border-radius: 0.15rem;
-                    
+
                     &:hover {
                         background-color: #0084ff;
                     }

@@ -57,6 +57,7 @@
     "@ckeditor/ckeditor5-build-classic": "^41.2.1",
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "@codemirror/lang-html": "^6.4.8",
+    "@codemirror/lang-json": "^6.0.1",
     "@reduxjs/toolkit": "^2.2.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.30",

@@ -3,10 +3,11 @@ import { useApp } from "../App";
 
 
 export interface BlockManagerProps {
-    className?: string
+    className?: string,
+    children?: any
 }
 
-export const BlockManager = ({ className }: BlockManagerProps) => {
+export const BlockManager = ({ children, className }: BlockManagerProps) => {
     const { setBlockManager, classPrefix } = useApp();
     const ref = useRef(null);
 
@@ -20,7 +21,7 @@ export const BlockManager = ({ className }: BlockManagerProps) => {
 
     return (
         <>
-            <div ref={ref} className={`${classPrefix}layout block-manager ${className || ""}`}></div>
+            <div ref={ref} className={`${classPrefix}layout block-manager ${className || ""}`}>{children}</div>
         </>
     )
 }

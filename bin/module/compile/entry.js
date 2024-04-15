@@ -11,7 +11,7 @@ const assets_entry = function (working_dir) {
     }).reduce((entry, file) => {
         const key = path.resolve(working_dir, path.dirname(file).replace(/src$/, 'dist'), path.basename(file)).replace(/\.\w+$/, '');
         const value = (path.resolve(working_dir, path.dirname(file), path.basename(file)).replace(/\.\w+$/, ''));
-        entry[key.replace(cwd, './')] = value.replace(cwd, './');
+        entry[(cwd == working_dir ? "" : ".\\..\\..\\..\\") + key.replace(cwd, './')] = value.replace(cwd, './');
         return entry;
     }, {});
 }
@@ -25,7 +25,7 @@ const widgets_entry = function (working_dir) {
     }).reduce((entry, file) => {
         const key = path.resolve(working_dir, path.dirname(file).replace(/src$/, 'dist'), path.basename(file)).replace(/\.\w+$/, '');
         const value = (path.resolve(working_dir, path.dirname(file), path.basename(file)).replace(/\.\w+$/, ''));
-        entry[key.replace(cwd, './')] = value.replace(cwd, './');
+        entry[(cwd == working_dir ? "" : ".\\..\\..\\..\\") + key.replace(cwd, './')] = value.replace(cwd, './');
         return entry;
     }, {});
 }
@@ -39,7 +39,7 @@ const blocks_entry = function (working_dir) {
     }).reduce((entry, file) => {
         const key = path.resolve(working_dir, path.dirname(file).replace(/src$/, 'dist'), path.basename(file)).replace(/\.\w+$/, '');
         const value = (path.resolve(working_dir, path.dirname(file), path.basename(file)).replace(/\.\w+$/, ''));
-        entry[key.replace(cwd, './')] = value.replace(cwd, './');
+        entry[(cwd == working_dir ? "" : ".\\..\\..\\..\\") + key.replace(cwd, './')] = value.replace(cwd, './');
         return entry;
     }, {});
 }

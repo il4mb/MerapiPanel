@@ -2,12 +2,15 @@ const fs = require("fs");
 const path = require("path");
 const colours = require('../../conlor.js');
 
-console.log(`${colours.fg.red}WARNING:${colours.reset} this feature is not ready yet`);
-process.exit(1);
 
 const blockName = process.argv[5];
 
 const start = (module_dir) => {
+
+
+    console.log(`${colours.fg.red}WARNING:${colours.reset} this feature is not ready yet`);
+    process.exit(1);
+
 
     if (!blockName) {
         console.log("Usage: merapipanel module <module-name> add-block <block-name>");

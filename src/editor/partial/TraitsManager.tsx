@@ -4,10 +4,11 @@ import { useApp } from "../App";
 
 export interface TraitsManagerProps {
     className?: string
+    children?: any
 }
 
 
-export const TraitsManager = ({ className }: TraitsManagerProps) => {
+export const TraitsManager = ({ children, className }: TraitsManagerProps) => {
     const { classPrefix, setTraitManager } = useApp();
     const ref = useRef(null);
 
@@ -19,6 +20,8 @@ export const TraitsManager = ({ className }: TraitsManagerProps) => {
     }, [ref.current])
 
     return (
-        <div ref={ref} className={`${classPrefix}layout traits-manager ${className || ""}`}></div>
+        <div ref={ref} className={`${classPrefix}layout traits-manager ${className || ""}`}>
+            { children }
+        </div>
     )
 }

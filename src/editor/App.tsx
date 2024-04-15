@@ -1,4 +1,4 @@
-import grapesjs, { BlockManagerConfig, ButtonProps, DeviceManagerConfig, Editor, EditorConfig, LayerManagerConfig, Option, PanelProps, PanelsConfig, Plugin, StyleManagerConfig } from "grapesjs";
+import grapesjs, { BlockManagerConfig, ButtonProps, DeviceManagerConfig, Editor, EditorConfig, LayerManagerConfig, Option, PanelProps, PanelsConfig, Plugin, SelectorManagerConfig, StyleManagerConfig } from "grapesjs";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import blockBasicPlugin from 'grapesjs-blocks-basic';
 import ckeditorPlugin from "grapesjs-plugin-ckeditor";
@@ -19,6 +19,7 @@ export interface AppConfig {
     setDefaultsPanels: (defaultsPanels: PanelProps) => void
     setPanels: (panels: PanelsConfig) => void
     setTraitManager: (traitManager: any) => void
+    setSelectorManager: (selectorManager: SelectorManagerConfig) => void
 }
 
 export interface AppProps extends EditorConfig {
@@ -78,6 +79,7 @@ const [defaultsPanels, _setDefaultsPanels] = useState<PanelProps[]>(config.panel
 const [panels, _setPanels] = useState<PanelsConfig>(config.panels || {
     defaults: defaultsPanels
 });
+const [selectorManager, _setSelectorManager] = useState(config.selectorManager || {});
 const [needReload, setNeedReload] = useState(false);
 
 const initial: AppInterface = {
@@ -95,6 +97,7 @@ const initial: AppInterface = {
         pluginsOpts: pluginsOpts,
         cssIcons: "",
         protectedCss: '',
+        selectorManager: selectorManager,
         ...config
     },
     appRef,
@@ -102,6 +105,10 @@ const initial: AppInterface = {
     classPrefix,
     editor,
     setEditor: (editor: Editor) => _setEditor(editor),
+    setSelectorManager: (selectorManager: SelectorManagerConfig) => {
+        _setSelectorManager(selectorManager);
+        setNeedReload(true);
+    },
     setBlockManager: (blockManager: BlockManagerConfig) => {
         _setBlockManager(blockManager);
         setNeedReload(true);

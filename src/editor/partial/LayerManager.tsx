@@ -3,8 +3,9 @@ import { useApp } from "../App";
 
 export interface LayerManagerProps {
     className?: string
+    children?: any
 }
-export const LayerManager = ({ className }: LayerManagerProps) => {
+export const LayerManager = ({ children, className }: LayerManagerProps) => {
     const { classPrefix, setLayerManager } = useApp();
     const ref = useRef(null);
 
@@ -15,6 +16,8 @@ export const LayerManager = ({ className }: LayerManagerProps) => {
         })
     }, [ref.current])
     return (
-        <div ref={ref} className={`${classPrefix}layout layer-manager ${className || ""}`}></div>
+        <div ref={ref} className={`${classPrefix}layout layer-manager ${className || ""}`}>
+            {children}
+        </div>
     );
 }
