@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 export const ObjectToast = () => {
     return {
         create: function (text: string = "", textColor: string = "#0000ff45", seconds: number = 3) {

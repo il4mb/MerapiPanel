@@ -38,6 +38,37 @@ $quaternary-color: #0084ff;
         color: #0084ff;
     }
 }
+.gjs-field-select {
+    & option {
+        background: $primary-color;
+        color: #323232;
+    }
+}
+.gjs-layers {
+    & .gjs-layer {
+        &.gjs-selected {
+            background: $quaternary-color;
+            color: #fff;
+            & .gjs-layer-title {
+                color: #fff;
+            }
+            & .gjs-layers {
+                & .gjs-layer {
+                    background: $quaternary-color;
+                    color: #fff;
+                    opacity: 0.5;
+                }
+            }
+        }
+        &.gjs-selected:hover {
+            background: $quaternary-color;
+            color: #fff;
+        }
+    }
+}
+.gjs-sm-sector {
+    font-weight: 400;
+}
 
 .#{$prefix}app {
     width: 100vw;
@@ -112,6 +143,58 @@ $quaternary-color: #0084ff;
 .#{$prefix}empty {
     opacity: 0.5;
 }
+
+
+body:has(.#{$prefix}loading-screen) {
+    overflow: hidden;
+    cursor: wait;
+}
+.#{$prefix}loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 9999;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    & .progress {
+        width: 100%;
+        max-width: 300px;
+        height: 10px;
+        border-radius: 2rem;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.1);
+        position: relative;
+        & .progress-bar {
+            background-color: #0084ff;
+        }
+    }
+}
+.#{$prefix}loading-action {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff2c;
+    backdrop-filter: blur(0.25px);
+    z-index: 9991;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+
+
+
+
 
 // PLUGIN CODE EDITOR
 .code-editor-modal {

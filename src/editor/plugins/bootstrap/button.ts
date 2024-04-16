@@ -21,14 +21,14 @@ export const Register = (editor: Editor) => {
                 components: [
                     {
                         type: 'text',
-                        text: 'Button'
+                        components: 'Button'
                     }
                 ],
                 traits: [
                     {
                         type: 'select',
                         label: 'Type',
-                        name: 'type',
+                        name: '_type',
                         options: [
                             { value: 'solid', name: 'Solid' } as any,
                             { value: 'outline', name: 'Outline' } as any
@@ -72,6 +72,33 @@ export const Register = (editor: Editor) => {
                 // Listen to any attribute change
                 this.on('change:attributes', this.handleAttrChange);
 
+                setTimeout(() => {
+
+                    let _type = 'solid';
+                    if(this.getClasses().includes('btn-outline-')) _type = 'outline';
+
+                    let theme = 'primary';
+                    if(this.getClasses().includes('btn-primary')) theme = 'primary';
+                    if(this.getClasses().includes('btn-secondary')) theme = 'secondary';
+                    if(this.getClasses().includes('btn-success')) theme = 'success';
+                    if(this.getClasses().includes('btn-danger')) theme = 'danger';
+                    if(this.getClasses().includes('btn-warning')) theme = 'warning';
+                    if(this.getClasses().includes('btn-info')) theme = 'info';
+                    if(this.getClasses().includes('btn-light')) theme = 'light';
+                    if(this.getClasses().includes('btn-dark')) theme = 'dark';
+
+                    let size = '';
+                    if(this.getClasses().includes('btn-sm')) size = 'sm';
+                    if(this.getClasses().includes('btn-lg')) size = 'lg';
+
+                    this.set({
+                        _type,
+                        theme,
+                        size
+                    });
+
+                }, 300);
+
             },
 
             handleAttrChange() {
@@ -82,7 +109,7 @@ export const Register = (editor: Editor) => {
                 if (attrs.size == 'sm') className += " btn-sm";
                 if (attrs.size == 'lg') className += " btn-lg";
 
-                if (attrs.type == 'outline') {
+                if (attrs._type == 'outline') {
                     className += " btn-outline-" + attrs.theme;
                 } else {
                     className += " btn-" + attrs.theme;

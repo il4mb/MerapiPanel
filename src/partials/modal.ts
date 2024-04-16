@@ -1,3 +1,4 @@
+import $ from "jquery";
 
 abstract class UnitModel {
     #element: JQuery<HTMLElement>;
