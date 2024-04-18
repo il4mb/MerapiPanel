@@ -14,9 +14,25 @@
     "scss"
   ],
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+    "./cookie": {
+      "import": "./dist/cookie.js",
+      "types": "./dist/cookie.d.ts"
+    },
+    "./dialog": {
+      "import": "./dist/dialog.js",
+      "types": "./dist/dialog.d.ts"
+    },
+    "./http": {
+      "import": "./dist/http.js",
+      "types": "./dist/http.d.ts"
+    },
+    "./modal": {
+      "import": "./dist/modal.js",
+      "types": "./dist/modal.d.ts"
+    },
+    "./toast": {
+      "import": "./dist/toast.js",
+      "types": "./dist/toast.d.ts"
     },
     "./scss/editor": {
       "import": "./scss/editor/index.js"
@@ -63,6 +79,7 @@
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
+    "bootstrap": "^5.3.3",
     "cm6-theme-basic-dark": "^0.2.0",
     "codemirror": "^6.0.1",
     "css-loader": "^6.10.0",
@@ -85,6 +102,7 @@
     "@babel/preset-env": "^7.24.3",
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
+    "@types/bootstrap": "^5.2.10",
     "@types/codemirror": "^5.60.15",
     "@types/js-beautify": "^1.14.3",
     "@types/node-sass": "^4.11.7",

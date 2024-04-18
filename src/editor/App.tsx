@@ -2,7 +2,6 @@ import grapesjs, { BlockManagerConfig, ButtonProps, DeviceManagerConfig, Editor,
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import blockBasicPlugin from 'grapesjs-blocks-basic';
 import ckeditorPlugin from "grapesjs-plugin-ckeditor";
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CodeEditor } from "./plugins/CodeEditor";
 import parserPostCSS from 'grapesjs-parser-postcss';
 

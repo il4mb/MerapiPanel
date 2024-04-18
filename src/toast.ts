@@ -86,6 +86,7 @@ export const ObjectToast = () => {
     }
 }
 
-export const toast = (text: string, seconds: number = 3, textColor: string = "#0000ff45") => {
+
+export const toast = (text: string = "", seconds: number = 3, textColor = "#0000ff45") => {
     return ObjectToast().create(text, textColor, seconds);
 }

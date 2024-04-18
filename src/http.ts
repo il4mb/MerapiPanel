@@ -1,42 +1,76 @@
 import $ from 'jquery';
 
-const proggressbars = $(`<div class='http-progress'><div class='download running-strip'></div><div class='upload running-strip'></div></div>`);
-$(document).on("ajaxSend", function (e) {
-    $('.http-progress').remove();
-    $(document.body).append(proggressbars);
-}).on("ajaxComplete", function () {
-    $('.http-progress').remove();
-});
 
+// $(document).on("ajaxSend", function (e) {
+//     $('#http-progress').remove();
+//     $(document.body).append(proggressbars);
+// }).on("ajaxComplete", function (e) {
+//     $('#http-progress').remove();
+// }).on("ajaxError", function (e) {
+//     $('#http-progress').remove();
+// });
+
+
+const createProgressbar = (id: string) => {
+
+    const proggressbars = $(`<div class="progress rounded-0 bg-opacity-75" role="progressbar" id='${id}'>`)
+        .append(`<div class='http-progress-download progress-bar bg-primary progress-bar-striped rounded-0 bg-opacity-75 position-absolute h-100' style="width: 0%;z-index: 2;"></div>`)
+        .append(`<div class='http-progress-upload progress-bar bg-secondary progress-bar-striped rounded-0 bg-opacity-75 position-absolute h-100' style="width: 0%; z-index: 1;"></div>`)
+
+    proggressbars.css({ position: 'fixed', width: '100%', height: '5px', backgroundColor: '#00000000', boxShadow: '0 1px 2px #00000045', top: 0, zIndex: 999 })
+
+    $(document.body).append(proggressbars);
+
+    return proggressbars;
+}
 
 
 export const CreateXmlHttpRequest = () => {
 
-    proggressbars.css({ position: 'fixed', width: '100%', height: '5px', 'background-color': '#00000000', 'box-shadow': '0 1px 2px #00000045', top: 0, 'z-index': 999 })
-    proggressbars.find('.download').css({ transision: '1s', position: 'absolute', top: 0, width: '0%', height: '100%', 'background-color': '#0091ff', 'z-index': 2 })
-    proggressbars.find('.upload').css({ transision: '1s', position: 'absolute', top: 0, width: '5%', height: '100%', 'background-color': '#eaeaea', 'z-index': 1 })
+    const id = Date.now().toString(16);
+    createProgressbar("xhr-" + id);
 
     const xhr = new XMLHttpRequest();
-
     xhr.addEventListener("progress", function (evt) {
+
         if (evt.lengthComputable) {
             let complete = (evt.loaded / evt.total * 100 | 0);
-            $('.http-progress').find('.download').css('width', `${complete}%`);
+            $(`#xhr-${id}`).find('.http-progress-download').css('width', `${complete}%`);
+
+            if (complete == 100) {
+                $(`#xhr-${id}`).remove();
+            }
         }
+        $(`#xhr-${id}`).find('.http-progress-upload').remove();
     });
 
     xhr.upload.addEventListener("progress", (evt) => {
+
         if (evt.lengthComputable) {
             let complete = Math.ceil((evt.loaded / evt.total) * 100);
-            $('.http-progress').find('.upload').css('width', `${complete}%`);
+            $(`#xhr-${id}`).find('.http-progress-upload').css('width', `${complete}%`);
+
+            if (complete == 100) {
+                $(`#xhr-${id}`).find('.http-progress-upload').remove();
+            }
         }
     });
+
     return xhr;
 }
 
 
 
-export type ResponseType = {
+export interface HttpInterface {
+    get: (url: string, data: Object | FormData, headers: object) => JQuery.jqXHR<ResponseType | any>;
+    post: (url: string, data: Object | FormData, headers: object) => JQuery.jqXHR<ResponseType | any>;
+    put: (url: string, data: Object | FormData, headers: object) => JQuery.jqXHR<ResponseType | any>;
+    patch: (url: string, data: Object | FormData, headers: object) => JQuery.jqXHR<ResponseType | any>;
+    delete: (url: string, data: Object | FormData, headers: object) => JQuery.jqXHR<ResponseType | any>;
+}
+
+
+export interface ResponseType {
     code: number
     message: string
     data: Array<any> | Object
@@ -45,7 +79,7 @@ export type ResponseType = {
 
 export const get = (url: string, data: Object | FormData, headers: object = {}): JQuery.jqXHR<ResponseType | any> => {
 
-    const ObjectURL = new URL(url);
+    const ObjectURL = new URL(/\:\/\/[^/]+/.test(url) ? url : `${window.location.protocol}//${window.location.hostname}/${url.replace(/^\//, '')}`);
 
     if (data instanceof FormData) {
         for (let _p of data.entries()) {

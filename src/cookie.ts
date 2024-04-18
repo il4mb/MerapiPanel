@@ -1,3 +1,9 @@
+export interface CookieInterface {
+    cookie_set: (name: string, value: string, exdays: number) => void
+    cookie_get: (name: string) => string
+    cookie_delete: (name: string) => void
+}
+
 export const cookie_set = (name: string, value: string, exdays: number) => {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));

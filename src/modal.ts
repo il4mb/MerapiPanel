@@ -1,5 +1,16 @@
 import $ from "jquery";
 
+export interface ActionUnitInterface {
+    text?: string;
+    class?: string;
+    callback?: Function;
+}
+
+export type ActionTypeInterface = {
+    positive: ActionUnitInterface | Function | string
+    negative: ActionUnitInterface | Function | string
+}
+
 abstract class UnitModel {
     #element: JQuery<HTMLElement>;
 
@@ -10,7 +21,6 @@ abstract class UnitModel {
         return this.#element;
     }
 }
-
 
 
 class ActionUnit {
@@ -82,8 +92,6 @@ class ActionUnit {
         return button;
     }
 }
-
-
 
 
 class Action {
@@ -167,10 +175,7 @@ class Action {
 
 
 
-export type ActionTypeInterface = {
-    positive: ActionUnit | any
-    negative: ActionUnit | any
-}
+
 
 export type ModalTypeInterface = {
     title: string | JQuery | HTMLElement
@@ -178,6 +183,7 @@ export type ModalTypeInterface = {
     dismiss: ActionUnit | null
     action: ActionTypeInterface
     clickOut: boolean
+    el: JQuery<HTMLElement>
     show(): void
     hide(): void
     toggle(): void
@@ -194,7 +200,7 @@ const isHTML = (content: string) => {
     return Array.from(new DOMParser().parseFromString(content, "text/html").body.childNodes).some(({ nodeType }) => nodeType == 1);
 }
 
-class Modal extends UnitModel {
+export class Modal extends UnitModel {
 
     #title: string | JQuery | HTMLElement = "";
     #content: string | JQuery<HTMLElement> | HTMLElement = "";
@@ -204,6 +210,7 @@ class Modal extends UnitModel {
 
 
     constructor(el: HTMLElement | JQuery) {
+
         super($(el));
 
         this.#action = new Action(this, {
@@ -256,7 +263,12 @@ class Modal extends UnitModel {
                 if (typeof value !== 'boolean') { console.error('clickOut must be a boolean'); return; }
                 this.#clickOut = value;
             }
-        })
+        });
+
+        Object.defineProperty(this, 'el', {
+            get: () => { return this.getElement(); }
+        });
+
     }
 
     getAction(): Action {
@@ -293,7 +305,7 @@ class Modal extends UnitModel {
         this.fire('modal:show', this);
 
         // if modal is not in the dom, append it
-        if (this.getElement().parent().length <= 0) $(document.body).append(this.getElement());
+        if (this.getElement().parent("html").length <= 0) $(document.body).append(this.getElement());
 
         // add backdrop
         if ($(this.getElement()).find('.modal-backdrop').length <= 0) $(this.getElement()).append($(`<div class="modal-backdrop"></div>`));
@@ -373,15 +385,13 @@ class Modal extends UnitModel {
 
         let modal = $(this.getElement());
         let modal_title = modal.find('.modal-header .modal-title');
+        if ((modal_title.length > 0
+            && $(this.#title as any).length > 0 
+            && modal_title.get(0) !== this.#title)) {
+            modal_title.html($(this.#title as any).html());
 
-        if ($(this.#title as any).length == 1) {
-            let title = $(this.#title as any);
-            title.addClass('modal-title');
-            modal_title.replaceWith(title);
-        } else {
-            modal_title.html(this.#title as any);
         }
-        modal_title.addClass('modal-title');
+
 
         if (this.#dismiss) {
             let btn = this.#dismiss.render();
@@ -401,7 +411,7 @@ class Modal extends UnitModel {
     }
 
 
-    static create(title: string | JQuery, content: string | JQuery): ModalTypeInterface {
+    static create(title: string | JQuery, content: string | JQuery | null | undefined): ModalTypeInterface {
 
         // create minimal modal structure
         let element = $(`<div class="modal" tabindex="-1">
@@ -424,7 +434,7 @@ class Modal extends UnitModel {
 
         let modal = (new Modal(element) as any);
         modal.title = isHTML(title as any) ? title : `<h4>${title}</h4>`;
-        modal.content = isHTML(content as any) ? content : `<div>${content}</div>`;
+        modal.content = content ? (!isHTML(content as any) ? content : `<div>${content}</div>`) : "";
         modal.dismiss = new ActionUnit('cancel', 'btn-close', () => { modal.hide(); });
 
         return modal;
@@ -435,10 +445,10 @@ class Modal extends UnitModel {
         let el = $(target);
 
         let title = el.find('.modal-title');
-        let content = el.find('.modal-content').children();
+        let content = el.find('.modal-body').children();
         let dismiss = el.find('.btn-close');
-        let act_positive = el.find('.modal-footer button')[1] ?? null;
-        let act_negative = el.find('.modal-footer button')[0] ?? null;
+        let act_positive = el.find('.modal-footer button')[0] ?? null;
+        let act_negative = el.find('.modal-footer button')[1] ?? null;
 
         let act = {} as any;
         if (act_positive) {
@@ -456,7 +466,8 @@ class Modal extends UnitModel {
             }
         }
 
-        let modal = new Modal(target) as any;
+        let modal: ModalTypeInterface = new Modal(target) as any;
+
         modal.title = title;
         modal.content = content;
         if (dismiss.length > 0) {
@@ -469,4 +480,7 @@ class Modal extends UnitModel {
     }
 }
 
-export default Modal;
+
+export interface ModalInterface {
+    Modal: typeof Modal;
+}

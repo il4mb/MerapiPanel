@@ -1,6 +1,0 @@
-export { toast } from './partials/toast'
-export * as http from './partials/http'
-export * as dialog from './partials/dialog'
-export * as cookie from './partials/cookie'
-export * as modal from './partials/modal'
-export * as editor from './editor'

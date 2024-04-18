@@ -15,6 +15,13 @@ $quaternary-color: #0084ff;
     border: 3px solid #444;
 }
 
+.gjs-mdl-container {
+    font-family: var(--bs-body-font-family);
+}
+.gjs-mdl-dialog {
+    font-weight: normal;
+}
+
 /* Reset some default styling */
 .gjs-cv-canvas {
     top: 0;
@@ -183,7 +190,7 @@ body:has(.#{$prefix}loading-screen) {
     height: 100%;
     background-color: #ffffff2c;
     backdrop-filter: blur(0.25px);
-    z-index: 9991;
+    z-index: 99;
     display: flex;
     flex-direction: row;
     justify-content: center;
