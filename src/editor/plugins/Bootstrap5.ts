@@ -20,10 +20,10 @@ export interface Bootstrap5Options {
 }
 export const Bootstrap5: Plugin<Bootstrap5Options> = (editor, { styles = [], scripts = [] }) => {
 
-  const { Components, BlockManager } = editor;
+  const { DomComponents, BlockManager } = editor;
 
 
-  Components.addType('link', {
+  DomComponents.addType('link', {
     extend: 'text',
     isComponent: (el) => el.tagName === 'A',
     model: {
@@ -51,8 +51,7 @@ export const Bootstrap5: Plugin<Bootstrap5Options> = (editor, { styles = [], scr
       }
     }
   })
-
-  Components.addType('paragraph', {
+  DomComponents.addType('paragraph', {
     extend: 'text',
     isComponent: (el) => el.tagName === 'P',
     model: {
@@ -109,8 +108,6 @@ export const Bootstrap5: Plugin<Bootstrap5Options> = (editor, { styles = [], scr
   Card.Register(editor);
   Table.Register(editor);
   Button.Register(editor);
-
-
 
   // editor.Components.addType('button', button);
   // editor.Components.addType('container', container(editor));

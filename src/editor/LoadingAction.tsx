@@ -17,7 +17,7 @@ export const LoadingAction = ({ autohide, show }: { autohide?: number, show: boo
     return (
         <>
             {isShow && <div className="editor-loading-action">
-                <div className="text-center">
+                <div className="text-center" style={{filter: "drop-shadow(0 0 2px #fff)", color: "#45aeff"}}>
                     <i className="fa-solid fa-slash fa-2x fa-spin"></i>
                     <div className="mt-3">Loading...</div>
                 </div>

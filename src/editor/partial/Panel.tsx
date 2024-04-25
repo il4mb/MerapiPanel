@@ -8,7 +8,7 @@ export interface PanelInterface extends PanelProps {
     children?: React.ReactNode
     id: string,
     className?: string,
-    resizable?: boolean| ResizerOptions
+    resizable?: boolean | ResizerOptions
 }
 
 
@@ -28,7 +28,7 @@ export const Panel = ({ id, children, className, resizable }: PanelInterface) =>
         return {
             id,
             el: `#${id}`,
-            buttons: buttons.map((btn, index) => {
+            buttons: buttons.map((btn) => {
 
                 let label = "";
                 if (typeof btn.props.children === "string") {
@@ -48,7 +48,21 @@ export const Panel = ({ id, children, className, resizable }: PanelInterface) =>
                     togglable: btn.props.togglable || false,
                     context: btn.props.context || null
                 }
-            }),
+            }).reduce((accumulator: any, currentObj) => {
+                const id = currentObj.id;
+
+                // Check if the id is already in the accumulator (using a lookup object)
+                if (!accumulator.lookup[id]) {
+                    // If not found, add the object to the accumulator array and the lookup object
+                    accumulator.lookup[id] = true;
+                    accumulator.result.push(currentObj);
+                }
+
+                return accumulator;
+            }, {
+                lookup: {}, // This will act as a lookup object to track unique 'id' values
+                result: []  // This will store the resulting unique array of objects
+            }).result,
             resizable: resizable || false
         }
     }
@@ -62,6 +76,6 @@ export const Panel = ({ id, children, className, resizable }: PanelInterface) =>
 
 
     return (
-        <div ref={ref} className={`${classPrefix}panel ${className||''}`} id={id}></div>
+        <div ref={ref} className={`${classPrefix}panel ${className || ''}`} id={id}></div>
     )
 }

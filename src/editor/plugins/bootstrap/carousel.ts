@@ -4,8 +4,29 @@ import $ from "jquery";
 
 export const Register = (editor: Editor) => {
 
-    const CM = editor.Components;
+    const CM = editor.DomComponents;
     const DM = editor.BlockManager;
+
+    const script = function () {
+
+        const $this = $(this);
+        const carousel = new window.bootstrap.Carousel($this.get(0));
+
+        carousel.to(0);
+
+        const indicator = $this.find(".carousel-indicators");
+        const controlPrev = $this.find(".carousel-control-prev");
+        const controlNext = $this.find(".carousel-control-next");
+
+        controlPrev.on("click", () => carousel.prev());
+        controlNext.on("click", () => carousel.next());
+
+        indicator.find("[data-bs-slide-to]").on("click", function () {
+            carousel.to($(this).data("bs-slide-to"));
+        });
+
+
+    }
 
     CM.addType("bs-carousel", {
 
@@ -14,6 +35,7 @@ export const Register = (editor: Editor) => {
 
         model: {
             defaults: {
+                script,
                 tagName: 'div',
                 draggable: true,
                 droppable: "div.carousel-inner, div.carousel-indicators, div.carousel-caption, .carousel-control-prev, .carousel-control-next",
@@ -70,7 +92,7 @@ export const Register = (editor: Editor) => {
 
             addItem() {
 
-                const inner = this.components().filter(comp => comp.get('type') === 'bs-carousel-inner')[0];
+                const inner = this.components().filter((comp: Component) => comp.get('type') === 'bs-carousel-inner')[0];
 
                 if (inner) {
                     inner.components().add({
@@ -90,9 +112,19 @@ export const Register = (editor: Editor) => {
 
         view: {
 
+            init() {
+
+                setTimeout(() => {
+                    const scriptFunc = this.model.get('script') as any;
+                    if (scriptFunc) {
+                        // Execute the script function in the context of the component's element
+                        scriptFunc.call(this.el);
+                    }
+                }, 1000);
+            },
 
             render() {
-                const inner = this.model.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
+                const inner = this.model.get('components')?.filter((comp: Component) => comp.getClasses().includes('carousel-inner'))[0];
                 if (!inner) {
                     this.el.innerHTML = '';
                     this.el.appendChild((this.model as any).placeholder());
@@ -116,7 +148,6 @@ export const Register = (editor: Editor) => {
                 editable: false,
                 attributes: {
                     class: 'carousel-inner',
-                    style: "height: 300px;"
                 },
                 components: [],
             },
@@ -152,41 +183,25 @@ export const Register = (editor: Editor) => {
                 copyable: false,
                 attributes: {
                     class: 'carousel-item',
-                    style: "height: 100%"
+                    style: { height: '400px' },
                 },
                 components: {
                     type: 'image',
                     attributes: {
-                        style: "object-fit: cover;",
-                        class: "d-block w-100; height: 100%",
+                        style: { height: '100%', objectFit: 'cover' },
+                        class: "d-block w-100",
                     }
                 }
             },
 
             init() {
 
-                setTimeout(() => {
-                    const parent = this.parent(); // Get the parent component
-                    if (parent) {
-                        const carouselItems = parent.components().filter(comp => comp.get('type') === 'bs-carousel-item'); // Find all carousel-item components
-
-                        // Remove 'active' class from all carousel-items
-                        carouselItems.forEach(item => {
-                            const classes: any = item.getClasses();
-                            const filteredClasses = classes.filter((className: any) => className !== 'active');
-                            item.setClass(filteredClasses);
-                        });
-
-                        this.setClass(this.getClasses().concat('active'));
-                    }
-                }, 200);
-
                 this.listenTo(this, 'remove', () => {
                     const parent = this.parent(); // Get the parent component
                     if (parent) {
-                        const carouselItems = parent.components().filter(comp => comp.get('type') === 'bs-carousel-item'); // Find all carousel-item components
+                        const carouselItems = parent.components().filter((comp: Component) => comp.getClasses().includes('carousel-item')); // Find all carousel-item components
                         // Remove 'active' class from all carousel-items
-                        carouselItems.forEach(item => {
+                        carouselItems.forEach((item: Component) => {
                             const classes: any = item.getClasses();
                             const filteredClasses = classes.filter((className: any) => className !== 'active');
                             item.setClass(filteredClasses);
@@ -213,12 +228,20 @@ export const Register = (editor: Editor) => {
                 this.components().add({
                     type: 'image',
                     attributes: {
-                        style: "object-fit: cover; height: 100%;",
+                        style: { objectFit: 'cover', height: '100%' },
                         class: "d-block w-100",
                     }
                 })
             },
+        },
+        view: {
+            init() {
 
+                setTimeout(() => {
+                    $(this.el).parent().find(".carousel-item").removeClass("active");
+                    this.$el.addClass("active");
+                }, 200);
+            }
         }
     });
 
@@ -306,7 +329,9 @@ export const Register = (editor: Editor) => {
         extend: 'group',
 
         isComponent: (el) => el?.classList?.contains('carousel-indicators'),
+
         model: {
+
             defaults: {
                 tagName: 'div',
                 draggable: "div.carousel",
@@ -314,6 +339,11 @@ export const Register = (editor: Editor) => {
                 editable: false,
                 moveable: false,
                 copyable: false,
+
+                typeItem: "bs-carousel-item",
+                typeInner: "bs-carousel-inner",
+                typeButton: "bs-button",
+
                 attributes: {
                     class: 'carousel-indicators',
                     style: 'height: 20px; width: 100%; display: flex; align-items: end; justify-content: center;',
@@ -321,67 +351,58 @@ export const Register = (editor: Editor) => {
                 components: []
             },
 
-            init() {
-
-                setTimeout(() => {
-                    const parent = this.parent(); // Get the parent component
-                    if (parent) {
-                        const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
-                        if (inner) {
-                            const items = inner.get('components')?.filter((comp: any) => comp.get('type') === 'carousel-item') ?? [];
-                            this.syncButtonWithInnerItems(items, parent.getId());
-                        }
-
-                        editor.on('component:mount', (component) => {
-
-                            if (component.get('type') === "bs-carousel-item") {
-                                const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
-                                if (inner) {
-                                    this.syncButtonWithInnerItems(inner.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-item') ?? [], parent.getId());
-                                }
-                            }
-                        });
-                        editor.on('component:remove', (component) => {
-                            if (component.get('type') === parent.get('type')) {
-                                const inner = parent.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-inner')[0];
-                                if (inner) {
-                                    this.syncButtonWithInnerItems(inner.get('components')?.filter((comp: any) => comp.get('type') === 'bs-carousel-item') ?? [], parent.getId());
-                                }
-                            }
-                        })
-                    }
-                }, 200);
-            },
-
             placeholder() {
                 return "";
             },
 
+            syncButtonWithInnerItems(items: JQuery, parentId: string) {
 
-            syncButtonWithInnerItems(items: Component[], id: string) {
+                this.components().remove(this.components().filter(() => true));
 
-                this.components().remove(this.components().filter((comp: any) => comp.get('type') === 'bs-button'));
 
-                items.forEach((item, index) => {
-                    const isActive = item.getClasses().includes('active');
-                    const buttonClass = isActive ? 'active' : '';
-                    const ariaLabel = `Slide ${index + 1}`;
-                    const dataBsSlideTo = index;
+                setTimeout(() => {
+                    items.each((i, el) => {
+                        
+                        this.components().add({
+                            tagName: 'button',
+                            attributes: {
+                                class: 'carousel-indicator-btn' + (el.classList.contains('active') ? ' active' : ''),
+                                'data-bs-target': `#${parentId}`,
+                                'data-bs-slide-to': i,
+                                type: 'button',
+                            },
+                            removable: false,
+                            droppable: false,
+                            editable: false,
+                            moveable: false,
+                            copyable: false,
+                        })
+                    })
+                    this.view?.render();
+                }, 300)
+            },
+        },
 
-                    this.components().add({
-                        tagName: 'button',
-                        type: 'bs-button',
-                        attributes: {
-                            class: buttonClass,
-                            'data-bs-target': `#${id}`,
-                            'data-bs-slide-to': dataBsSlideTo,
-                            'aria-label': ariaLabel
-                        }
-                    });
+        view: {
+            init() {
+                setTimeout(() => {
+                    (this.model as any).syncButtonWithInnerItems(this.$el.parent().find(".carousel-inner .carousel-item"), this.$el.parent().attr('id') ?? '');
+                }, 400);
+
+                editor.on('component:mount', (component) => {
+
+                    if (component.getClasses().includes('carousel-item')) {
+                        (this.model as any).syncButtonWithInnerItems(this.$el.parent().find(".carousel-inner .carousel-item"), this.$el.parent().attr('id') ?? '');
+                    }
+                });
+                editor.on('component:remove', (component) => {
+
+                    if (component.getClasses().includes('carousel-item')) {
+                        setTimeout(() => (this.model as any).syncButtonWithInnerItems(this.$el.parent().find(".carousel-inner .carousel-item"), this.$el.parent().attr('id') ?? ''), 300);
+                    }
                 });
 
-                this.view?.render();
-            },
+            }
         }
     });
 

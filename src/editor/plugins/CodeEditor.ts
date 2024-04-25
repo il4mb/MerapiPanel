@@ -30,23 +30,28 @@ const beautyOptions = {
     "embeddedLanguageFormatting": "auto"
 } as any;
 
-
+interface EditableConfig {
+    css: boolean,
+    json: boolean
+}
 interface CodeEditorOptions {
-    allowScripts?: boolean
+    editable?: boolean | EditableConfig
+
 }
 
 export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
 
+    if ((editor.config.pluginsOpts as any)['CodeEditor']) {
+        options = { ...options, ...(editor.config.pluginsOpts as any)['CodeEditor'] };
+    } else if (!options.editable) {
+        options.editable = false;
+    }
+
     var jsonContent = JSON.stringify(editor.getComponents(), null, 4);
     var cssContent = css_beautify(editor.getCss() || "", beautyOptions);
 
-    if (options.allowScripts) {
-        (editor.getConfig() as any).allowScripts = 1;
-    } else {
-        (editor.getConfig() as any).allowScripts = 0;
-    }
-
     editor.Commands.add("code-editor", {
+        
         run: async (editor: Editor, sender: any) => {
 
             const content = $(`<div class="code-editor-wrapper">
@@ -128,29 +133,33 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
                     basicSetup,
                     json(),
                     autocompletion(),
-                    EditorView.updateListener.of((update) => {
-                        if (update.docChanged) {
-                            jsonContent = update.state.doc.toString();
+                    options.editable === true
+                        ? EditorView.updateListener.of((update) => {
+                            if (update.docChanged) {
+                                jsonContent = update.state.doc.toString();
 
-                            if (updateComponents) clearTimeout(updateComponents);
-                            updateComponents = setTimeout(() => {
-                                let x: number = 0;
-                                try {
-                                    JSON.parse(jsonContent);
-                                } catch (error) {
-                                    x++;
-                                } finally {
-                                    if (x > 0) return;
-                                    editor.DomComponents.clear();
-                                    const components = JSON.parse(jsonContent);
-                                    editor.setComponents(components);
-                                    editor.setStyle(cssContent);
-                                    editor.refresh();
-                                }
+                                if (updateComponents) clearTimeout(updateComponents);
+                                updateComponents = setTimeout(() => {
+                                    let x: number = 0;
+                                    try {
+                                        JSON.parse(jsonContent);
+                                    } catch (error) {
+                                        x++;
+                                    } finally {
+                                        if (x > 0) return;
+                                        editor.DomComponents.clear();
+                                        const components = JSON.parse(jsonContent);
+                                        editor.setComponents(components);
+                                        editor.setStyle(cssContent);
+                                        editor.refresh();
+                                    }
 
-                            }, 1000);
-                        }
-                    })
+                                }, 1000);
+                            }
+                        })
+                        : (options.editable as EditableConfig).json
+                            ? EditorView.editable.of(false)
+                            : EditorView.editable.of(true)
                 ],
                 parent: content.find("div.code-json .code-content")[0]
             });
@@ -160,28 +169,33 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
                     basicSetup,
                     css(),
                     autocompletion(),
-                    EditorView.updateListener.of((update) => {
-                        if (update.docChanged) {
-                            cssContent = update.state.doc.toString();
+                    options.editable === true
+                        ? EditorView.updateListener.of((update) => {
+                            if (update.docChanged) {
+                                cssContent = update.state.doc.toString();
 
-                            if (updateComponents) clearTimeout(updateComponents);
-                            updateComponents = setTimeout(() => {
-                                let x: number = 0;
-                                try {
-                                    JSON.parse(jsonContent);
-                                } catch (error) {
-                                    x++;
-                                } finally {
-                                    if (x > 0) return;
-                                    editor.DomComponents.clear();
-                                    const components = JSON.parse(jsonContent);
-                                    editor.setComponents(components);
-                                    editor.setStyle(cssContent);
-                                    editor.refresh();
-                                }
-                            }, 1000);
-                        }
-                    })
+                                if (updateComponents) clearTimeout(updateComponents);
+                                updateComponents = setTimeout(() => {
+                                    let x: number = 0;
+                                    try {
+                                        JSON.parse(jsonContent);
+                                    } catch (error) {
+                                        x++;
+                                    } finally {
+                                        if (x > 0) return;
+                                        editor.DomComponents.clear();
+                                        const components = JSON.parse(jsonContent);
+                                        editor.setComponents(components);
+                                        editor.setStyle(cssContent);
+                                        editor.refresh();
+                                    }
+                                }, 1000);
+                            }
+                        })
+                        : (options.editable as EditableConfig).css
+                            ? EditorView.editable.of(false)
+                            : EditorView.editable.of(true)
+
                 ],
                 parent: content.find("div.code-css .code-content")[0]
             });
@@ -200,7 +214,7 @@ export const CodeEditor: Plugin<CodeEditorOptions> = (editor, options) => {
                 }, 1)
             });
             modal.open({
-                title: "Code Editor",
+                title: "Code Editor " + "<small style='font-size: 0.7rem'><i>" + (options.editable ? "" : "Read Only") + "</i></small>",
                 content: content,
                 attributes: {
                     class: "code-editor-modal"

@@ -73,101 +73,102 @@ export const App = ({ children, ...config }: AppProps) => {
         parserPostCSS
     ]);
     const [pluginsOpts, _setPluginsOpts] = useState<Record<string, Option>>({ ...config.pluginsOpts } || { CodeEditor: { allowInline: true } });
-const [container, _setContainer] = useState<any>("#editor");
-const [defaultsPanels, _setDefaultsPanels] = useState<PanelProps[]>(config.panels?.defaults || []);
-const [panels, _setPanels] = useState<PanelsConfig>(config.panels || {
-    defaults: defaultsPanels
-});
-const [selectorManager, _setSelectorManager] = useState(config.selectorManager || {});
-const [needReload, setNeedReload] = useState(false);
+    const [container, _setContainer] = useState<any>("#editor");
+    const [defaultsPanels, _setDefaultsPanels] = useState<PanelProps[]>(config.panels?.defaults || []);
+    const [panels, _setPanels] = useState<PanelsConfig>(config.panels || {
+        defaults: defaultsPanels
+    });
+    const [selectorManager, _setSelectorManager] = useState(config.selectorManager || {});
+    const [needReload, setNeedReload] = useState(false);
 
-const initial: AppInterface = {
-    config: {
-        container: container,
-        assetManager: assetManager,
-        storageManager: storageManager,
-        traitManager: traitManager,
-        blockManager: blockManager,
-        styleManager: styleManager,
-        layerManager: layerManager,
-        panels: panels,
-        deviceManager: deviceManager,
-        plugins: plugins,
-        pluginsOpts: pluginsOpts,
-        cssIcons: "",
-        protectedCss: '',
-        selectorManager: selectorManager,
-        ...config
-    },
-    appRef,
-    needReload,
-    classPrefix,
-    editor,
-    setEditor: (editor: Editor) => _setEditor(editor),
-    setSelectorManager: (selectorManager: SelectorManagerConfig) => {
-        _setSelectorManager(selectorManager);
-        setNeedReload(true);
-    },
-    setBlockManager: (blockManager: BlockManagerConfig) => {
-        _setBlockManager(blockManager);
-        setNeedReload(true);
-    },
-    setTraitManager: (traitManager: any) => {
-        _setTraitManager(traitManager);
-    },
-    setStyleManager: (styleManager: StyleManagerConfig) => {
-        _setStyleManager(styleManager);
-        setNeedReload(true);
-    },
-    setLayerManager: (layerManager: LayerManagerConfig) => {
-        _setLayerManager(layerManager);
-        setNeedReload(true);
-    },
-    setDeviceManager: (deviceManager: DeviceManagerConfig) => {
-        _setDeviceManager(deviceManager);
-        setNeedReload(true);
-    },
-    setPlugins: (plugins: Plugin[]) => {
-        _setPlugins(plugins);
-        setNeedReload(true);
-    },
-    setPluginsOpts: (pluginsOpts: Record<string, Option>) => {
-        _setPluginsOpts(pluginsOpts);
-        setNeedReload(true);
-    },
-    setContainer: (container: string | HTMLElement | undefined) => {
-        if (container && typeof container === "string") {
-            const el = document.querySelector(container);
-            el?.classList.add("editor-container");
-            if (el && el instanceof HTMLElement) {
-                _setContainer(el);
+    const initial: AppInterface = {
+        config: {
+            container: container,
+            assetManager: assetManager,
+            storageManager: storageManager,
+            traitManager: traitManager,
+            blockManager: blockManager,
+            styleManager: styleManager,
+            layerManager: layerManager,
+            panels: panels,
+            deviceManager: deviceManager,
+            plugins: plugins,
+            pluginsOpts: pluginsOpts,
+            cssIcons: "",
+            protectedCss: '',
+            selectorManager: selectorManager,
+            jsInHtml: true,
+            ...config
+        },
+        appRef,
+        needReload,
+        classPrefix,
+        editor,
+        setEditor: (editor: Editor) => _setEditor(editor),
+        setSelectorManager: (selectorManager: SelectorManagerConfig) => {
+            _setSelectorManager(selectorManager);
+            setNeedReload(true);
+        },
+        setBlockManager: (blockManager: BlockManagerConfig) => {
+            _setBlockManager(blockManager);
+            setNeedReload(true);
+        },
+        setTraitManager: (traitManager: any) => {
+            _setTraitManager(traitManager);
+        },
+        setStyleManager: (styleManager: StyleManagerConfig) => {
+            _setStyleManager(styleManager);
+            setNeedReload(true);
+        },
+        setLayerManager: (layerManager: LayerManagerConfig) => {
+            _setLayerManager(layerManager);
+            setNeedReload(true);
+        },
+        setDeviceManager: (deviceManager: DeviceManagerConfig) => {
+            _setDeviceManager(deviceManager);
+            setNeedReload(true);
+        },
+        setPlugins: (plugins: Plugin[]) => {
+            _setPlugins(plugins);
+            setNeedReload(true);
+        },
+        setPluginsOpts: (pluginsOpts: Record<string, Option>) => {
+            _setPluginsOpts(pluginsOpts);
+            setNeedReload(true);
+        },
+        setContainer: (container: string | HTMLElement | undefined) => {
+            if (container && typeof container === "string") {
+                const el = document.querySelector(container);
+                el?.classList.add("editor-container");
+                if (el && el instanceof HTMLElement) {
+                    _setContainer(el);
+                    setNeedReload(true);
+                }
+            } else if (container && container instanceof HTMLElement) {
+                container.classList.add("editor-container");
+                _setContainer(container);
                 setNeedReload(true);
             }
-        } else if (container && container instanceof HTMLElement) {
-            container.classList.add("editor-container");
-            _setContainer(container);
+        },
+        setDefaultsPanels: (_defaultsPanels: PanelProps) => {
+            if (defaultsPanels.some((p) => p.id === _defaultsPanels.id)) {
+                defaultsPanels.splice(defaultsPanels.findIndex((p) => p.id === _defaultsPanels.id), 1);
+            }
+            defaultsPanels.push(_defaultsPanels);
+            _setDefaultsPanels(defaultsPanels);;
             setNeedReload(true);
+        },
+        setPanels: (panels: PanelsConfig) => {
+            _setPanels(panels);
         }
-    },
-    setDefaultsPanels: (_defaultsPanels: PanelProps) => {
-        if (defaultsPanels.some((p) => p.id === _defaultsPanels.id)) {
-            defaultsPanels.splice(defaultsPanels.findIndex((p) => p.id === _defaultsPanels.id), 1);
-        }
-        defaultsPanels.push(_defaultsPanels);
-        _setDefaultsPanels(defaultsPanels);;
-        setNeedReload(true);
-    },
-    setPanels: (panels: PanelsConfig) => {
-        _setPanels(panels);
-    }
 
-};
+    };
 
-return (
-    <div ref={appRef} className="editor-app">
-        <AppContex.Provider value={initial}>
-            {children}
-        </AppContex.Provider>
-    </div>
-);
+    return (
+        <div ref={appRef} className="editor-app">
+            <AppContex.Provider value={initial}>
+                {children}
+            </AppContex.Provider>
+        </div>
+    );
 }

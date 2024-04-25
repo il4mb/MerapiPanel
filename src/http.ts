@@ -1,16 +1,6 @@
 import $ from 'jquery';
 
 
-// $(document).on("ajaxSend", function (e) {
-//     $('#http-progress').remove();
-//     $(document.body).append(proggressbars);
-// }).on("ajaxComplete", function (e) {
-//     $('#http-progress').remove();
-// }).on("ajaxError", function (e) {
-//     $('#http-progress').remove();
-// });
-
-
 const createProgressbar = (id: string) => {
 
     const proggressbars = $(`<div class="progress rounded-0 bg-opacity-75" role="progressbar" id='${id}'>`)
@@ -77,7 +67,7 @@ export interface ResponseType {
 }
 
 
-export const get = (url: string, data: Object | FormData, headers: object = {}): JQuery.jqXHR<ResponseType | any> => {
+export const get = (url: string, data: Object | FormData, headers: object = {}): Promise<ResponseType> => {
 
     const ObjectURL = new URL(/\:\/\/[^/]+/.test(url) ? url : `${window.location.protocol}//${window.location.hostname}/${url.replace(/^\//, '')}`);
 
@@ -94,20 +84,31 @@ export const get = (url: string, data: Object | FormData, headers: object = {}):
         }
     }
 
-    return $.ajax({
-        xhr: CreateXmlHttpRequest,
-        url: ObjectURL.toString(),
-        method: 'GET',
-        processData: false,
-        contentType: false,
-        cache: false,
-        headers: headers
-    } as any);
+    return new Promise<ResponseType>((resolve, reject) => {
+        $.ajax({
+            xhr: CreateXmlHttpRequest,
+            url: ObjectURL.toString(),
+            method: 'GET',
+            processData: false,
+            contentType: false,
+            cache: false,
+            headers: headers,
+            success: (data: ResponseType) => {
+                resolve(data);
+            },
+            error: (data: any) => {
+                reject((data.responseJSON || {
+                    code: data.status || 500,
+                    message: data.statusText || 'Internal Server Error',
+                }) as ResponseType);
+            }
+        } as any)
+    });
 }
 
 
 
-export const post = (url: string, data: Object | FormData, headers: object = {}): JQuery.jqXHR<ResponseType | any> => {
+export const post = (url: string, data: Object | FormData, headers: object = {}): Promise<ResponseType> => {
     let form = new FormData();
     if (data instanceof FormData) {
         form = data;
@@ -116,20 +117,31 @@ export const post = (url: string, data: Object | FormData, headers: object = {})
             form.append(key, (data as any)[key]);
         })
     }
-    return $.ajax({
-        xhr: CreateXmlHttpRequest,
-        url: url,
-        method: 'POST',
-        data: form,
-        processData: false,
-        contentType: false,
-        headers: headers
-    } as any);
+    return new Promise<ResponseType>((resolve, reject) => {
+        $.ajax({
+            xhr: CreateXmlHttpRequest,
+            url: url,
+            method: 'POST',
+            data: form,
+            processData: false,
+            contentType: false,
+            headers: headers,
+            success: (data: ResponseType) => {
+                resolve(data);
+            },
+            error: (data: any) => {
+                reject((data.responseJSON || {
+                    code: data.status || 500,
+                    message: data.statusText || 'Internal Server Error',
+                }) as ResponseType);
+            }
+        } as any)
+    });
 }
 
 
 
-export const put = (url: string, data: Object | FormData, headers: object = {}): JQuery.jqXHR<ResponseType | any> => {
+export const put = (url: string, data: Object | FormData, headers: object = {}): Promise<ResponseType> => {
 
     let form = new FormData();
     if (data instanceof FormData) {
@@ -139,21 +151,32 @@ export const put = (url: string, data: Object | FormData, headers: object = {}):
             form.append(key, (data as any)[key]);
         })
     }
-    return $.ajax({
-        xhr: CreateXmlHttpRequest,
-        url: url,
-        method: 'PUT',
-        data: form,
-        processData: false,
-        contentType: false,
-        headers: Object.assign(headers, { 'X-HTTP-Method-Override': 'PUT' }),
-        cache: false
-    })
+    return new Promise<ResponseType>((resolve, reject) => {
+        $.ajax({
+            xhr: CreateXmlHttpRequest,
+            url: url,
+            method: 'PUT',
+            data: form,
+            processData: false,
+            contentType: false,
+            headers: Object.assign(headers, { 'X-HTTP-Method-Override': 'PUT' }),
+            cache: false,
+            success: (data: ResponseType) => {
+                resolve(data);
+            },
+            error: (data: any) => {
+                reject((data.responseJSON || {
+                    code: data.status || 500,
+                    message: data.statusText || 'Internal Server Error',
+                }) as ResponseType);
+            }
+        } as any)
+    });
 }
 
 
 
-export const patch = (url: string, data: Object | FormData, headers: object = {}): JQuery.jqXHR<ResponseType | any> => {
+export const patch = (url: string, data: Object | FormData, headers: object = {}): Promise<ResponseType> => {
     let form = new FormData();
     if (data instanceof FormData) {
         form = data;
@@ -162,20 +185,31 @@ export const patch = (url: string, data: Object | FormData, headers: object = {}
             form.append(key, (data as any)[key]);
         })
     }
-    return $.ajax({
-        xhr: CreateXmlHttpRequest,
-        url: url,
-        method: 'PATCH',
-        data: form,
-        processData: false,
-        contentType: false,
-        headers: Object.assign(headers, { 'X-HTTP-Method-Override': 'PATCH' }),
-    })
+    return new Promise<ResponseType>((resolve, reject) => {
+        $.ajax({
+            xhr: CreateXmlHttpRequest,
+            url: url,
+            method: 'PATCH',
+            data: form,
+            processData: false,
+            contentType: false,
+            headers: Object.assign(headers, { 'X-HTTP-Method-Override': 'PATCH' }),
+            success: (data: ResponseType) => {
+                resolve(data);
+            },
+            error: (data: any) => {
+                reject((data.responseJSON || {
+                    code: data.status || 500,
+                    message: data.statusText || 'Internal Server Error',
+                }) as ResponseType);
+            }
+        })
+    });
 }
 
 
 
-export const del = (url: string, data: Object | FormData, headers: object = {}): JQuery.jqXHR<ResponseType | any> => {
+export const del = (url: string, data: Object | FormData, headers: object = {}): Promise<ResponseType> => {
     let form = new FormData();
     if (data instanceof FormData) {
         form = data;
@@ -184,13 +218,24 @@ export const del = (url: string, data: Object | FormData, headers: object = {}):
             form.append(key, (data as any)[key]);
         })
     }
-    return $.ajax({
-        xhr: CreateXmlHttpRequest,
-        url: url,
-        method: 'DELETE',
-        data: form,
-        processData: false,
-        contentType: false,
-        headers: Object.assign(headers, { 'X-HTTP-Method-Override': 'DELETE' }),
+    return new Promise<ResponseType>((resolve, reject) => {
+        $.ajax({
+            xhr: CreateXmlHttpRequest,
+            url: url,
+            method: 'DELETE',
+            data: form,
+            processData: false,
+            contentType: false,
+            headers: Object.assign(headers, { 'X-HTTP-Method-Override': 'DELETE' }),
+            success: (data: ResponseType) => {
+                resolve(data);
+            },
+            error: (data: any) => {
+                reject((data.responseJSON || {
+                    code: data.status || 500,
+                    message: data.statusText || 'Internal Server Error',
+                }) as ResponseType);
+            }
+        })
     })
 }

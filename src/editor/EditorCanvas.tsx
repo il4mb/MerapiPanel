@@ -13,6 +13,7 @@ export const EditorCanvas = () => {
         if (!ref.current || !needReload) return;
 
         if (editor) editor.destroy();
+        
         const initialEditor = grapesjs.init(config as any);
         setEditor(initialEditor);
 
