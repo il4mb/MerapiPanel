@@ -1,6 +1,6 @@
 {
   "name": "@il4mb/merapipanel",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Module of merapi panel CMS",
   "homepage": "https://github.com/il4mb/merapipanel#readme",
   "author": "il4mb",
@@ -100,6 +100,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/preset-env": "^7.24.3",
+    "@babel/preset-flow": "^7.24.7",
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
     "@types/bootstrap": "^5.2.10",
